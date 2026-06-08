@@ -8,290 +8,192 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0a0f;--bg2:#0f0f18;--bg3:#13131f;--bg4:#1a1a2e;
+  --bg:#0a0a0f;--bg2:#0f0f18;--bg3:#13131f;
   --red:#c0392b;--red2:#e74c3c;--red3:#ff6b6b;
   --gold:#d4a017;--gold2:#f0c040;
   --text:#e8e0d0;--text2:#a0958a;--text3:#6b6055;
   --border:#2a2030;--border2:#3d3050;
-  --glow:rgba(192,57,43,0.3);
+  --glow:rgba(192,57,43,0.4);
 }
 body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Cinzel',serif}
-::-webkit-scrollbar{width:6px}
+h1,h2,h3{font-family:'Cinzel',serif}
+::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
 
-/* LOGIN */
+/* ===== LOGIN ===== */
 #login-screen{
   position:fixed;inset:0;background:var(--bg);
   display:flex;align-items:center;justify-content:center;z-index:9999;
-  background-image:radial-gradient(ellipse at 50% 50%, rgba(192,57,43,0.08) 0%, transparent 70%);
+  background-image:radial-gradient(ellipse at 50% 50%,rgba(192,57,43,0.1) 0%,transparent 70%);
 }
 .login-box{
-  background:var(--bg3);border:1px solid var(--border2);padding:3rem;width:min(420px,90vw);
-  position:relative;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%);
+  background:var(--bg3);border:1px solid var(--border2);padding:3rem;
+  width:min(420px,90vw);position:relative;
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%);
 }
-.login-box::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(192,57,43,0.1) 0%,transparent 50%);pointer-events:none;
-}
-.entity-logo{text-align:center;margin-bottom:2rem}
-.entity-logo svg{width:80px;height:80px;opacity:0.9}
-.login-title{text-align:center;font-size:1.8rem;color:var(--gold2);letter-spacing:0.2em;margin-bottom:0.5rem}
-.login-sub{text-align:center;color:var(--text3);font-size:0.9rem;letter-spacing:0.1em;margin-bottom:2rem;text-transform:uppercase}
-.field{margin-bottom:1.2rem}
-.field label{display:block;color:var(--text2);font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem}
-.field input{
-  width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);
-  padding:0.75rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1rem;outline:none;transition:border-color 0.2s;
-}
+.login-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(192,57,43,0.08),transparent 50%);pointer-events:none}
+.entity-logo{text-align:center;margin-bottom:1.5rem}
+.login-title{text-align:center;font-size:1.8rem;color:var(--gold2);letter-spacing:0.2em;margin-bottom:0.3rem}
+.login-sub{text-align:center;color:var(--text3);font-size:0.85rem;letter-spacing:0.1em;margin-bottom:2rem;text-transform:uppercase}
+.field{margin-bottom:1.1rem}
+.field label{display:block;color:var(--text2);font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.35rem}
+.field input{width:100%;background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:0.7rem 1rem;font-family:'Rajdhani',sans-serif;font-size:1rem;outline:none;transition:border-color 0.2s}
 .field input:focus{border-color:var(--red)}
-.btn-login{
-  width:100%;background:var(--red);color:#fff;border:none;padding:1rem;
-  font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.15em;cursor:pointer;
-  text-transform:uppercase;transition:all 0.2s;margin-top:0.5rem;
-  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);
-}
+.btn-login{width:100%;background:var(--red);color:#fff;border:none;padding:1rem;font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.15em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;margin-top:0.5rem;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
 .btn-login:hover{background:var(--red2);transform:translateY(-1px)}
 .login-error{color:var(--red3);font-size:0.85rem;text-align:center;margin-top:0.75rem;min-height:1.2em}
+.login-hint{text-align:center;margin-top:1.2rem;color:var(--text3);font-size:0.75rem;letter-spacing:0.08em}
 
-/* APP */
+/* ===== APP ===== */
 #app{display:none;min-height:100vh}
-.topbar{
-  background:var(--bg3);border-bottom:1px solid var(--border2);
-  padding:0.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:0.5rem;
-}
-.topbar-logo{font-family:'Cinzel',serif;font-size:1.1rem;color:var(--gold2);letter-spacing:0.2em;display:flex;align-items:center;gap:0.75rem}
-.topbar-logo svg{width:28px;height:28px}
-.nav-tabs{display:flex;gap:0.25rem;flex-wrap:wrap}
-.nav-tab{
-  background:transparent;border:1px solid transparent;color:var(--text2);
-  padding:0.5rem 1rem;font-family:'Rajdhani',sans-serif;font-size:0.9rem;
-  letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;
-}
+.topbar{background:var(--bg3);border-bottom:1px solid var(--border2);padding:0.7rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:0.5rem}
+.topbar-logo{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold2);letter-spacing:0.2em;display:flex;align-items:center;gap:0.6rem}
+.nav-tabs{display:flex;gap:0.2rem;flex-wrap:wrap}
+.nav-tab{background:transparent;border:1px solid transparent;color:var(--text2);padding:0.45rem 0.9rem;font-family:'Rajdhani',sans-serif;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
 .nav-tab:hover{color:var(--text);border-color:var(--border2)}
 .nav-tab.active{background:var(--red);color:#fff;border-color:var(--red)}
-.topbar-right{display:flex;align-items:center;gap:0.75rem}
-.obs-link{
-  background:transparent;border:1px solid var(--gold);color:var(--gold);
-  padding:0.4rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.8rem;
-  letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;
-}
-.obs-link:hover{background:var(--gold);color:var(--bg)}
-.btn-logout{
-  background:transparent;border:1px solid var(--border2);color:var(--text3);
-  padding:0.4rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.8rem;
-  cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.1em;
-}
+.topbar-right{display:flex;align-items:center;gap:0.6rem}
+.btn-obs-mode{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:0.4rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.btn-obs-mode:hover{background:var(--gold);color:var(--bg)}
+.btn-logout{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:0.4rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.78rem;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
 .btn-logout:hover{border-color:var(--red);color:var(--red)}
 
-/* PAGES */
-.page{display:none;padding:2rem 1.5rem;max-width:1400px;margin:0 auto}
+/* ===== PAGES ===== */
+.page{display:none;padding:1.5rem;max-width:1400px;margin:0 auto}
 .page.active{display:block}
-.section-header{margin-bottom:2rem}
-.section-header h2{font-size:1.8rem;color:var(--gold2);letter-spacing:0.2em}
-.section-header p{color:var(--text3);font-size:0.9rem;margin-top:0.3rem;letter-spacing:0.05em}
-.section-divider{height:1px;background:linear-gradient(to right,var(--red),transparent);margin:0.75rem 0 0}
+.sec-header{margin-bottom:1.5rem}
+.sec-header h2{font-size:1.6rem;color:var(--gold2);letter-spacing:0.2em}
+.sec-header p{color:var(--text3);font-size:0.88rem;margin-top:0.2rem}
+.sec-divider{height:1px;background:linear-gradient(to right,var(--red),transparent);margin:0.6rem 0 0}
 
-/* ROULETTES */
-.roulettes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem}
-.roulette-card{
-  background:var(--bg3);border:1px solid var(--border2);padding:1.5rem;position:relative;
-  clip-path:polygon(0 0,calc(100% - 15px) 0,100% 15px,100% 100%,0 100%);
-}
-.roulette-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(to right,var(--red),transparent);
-}
-.roulette-title{font-size:1.1rem;color:var(--gold2);letter-spacing:0.15em;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.5rem}
-.roulette-display{
-  background:var(--bg2);border:1px solid var(--border);
-  height:220px;display:flex;align-items:center;justify-content:center;
-  margin-bottom:1rem;position:relative;overflow:hidden;
-}
-.roulette-track{display:flex;flex-direction:column;width:100%;position:absolute;top:0;left:0;}
-.roulette-item{
-  display:flex;align-items:center;gap:0.75rem;padding:0.6rem 1rem;
-  border-bottom:1px solid var(--border);font-size:0.85rem;color:var(--text2);
-  height:44px;flex-shrink:0;
-}
-.roulette-overlay{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to bottom,var(--bg2) 0%,transparent 30%,transparent 70%,var(--bg2) 100%);
-  z-index:2;
-}
-.roulette-selector{
-  position:absolute;top:50%;transform:translateY(-50%);
-  left:0;right:0;height:44px;pointer-events:none;z-index:3;
-  border-top:2px solid var(--red);border-bottom:2px solid var(--red);
-  box-shadow:0 0 15px var(--glow),inset 0 0 15px rgba(192,57,43,0.05);
-}
-.perk-icon-mini{
-  width:30px;height:30px;background:var(--bg3);border:1px solid var(--border2);
-  border-radius:3px;display:flex;align-items:center;justify-content:center;
-  font-size:0.65rem;color:var(--gold);flex-shrink:0;font-family:'Cinzel',serif;font-weight:700;
-}
-.roulette-result{
-  background:var(--bg2);border:1px solid var(--border2);padding:1rem;
-  text-align:center;min-height:85px;display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:0.3rem;margin-bottom:1rem;
-}
-.result-label{color:var(--text3);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase}
-.result-name{color:var(--gold2);font-family:'Cinzel',serif;font-size:1.1rem}
-.result-desc{color:var(--text2);font-size:0.78rem;line-height:1.4;max-width:260px;text-align:center}
-.btn-spin{
-  width:100%;background:var(--red);color:#fff;border:none;padding:0.9rem;
-  font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.15em;cursor:pointer;
-  text-transform:uppercase;transition:all 0.2s;
-  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);
-}
-.btn-spin:hover:not(:disabled){background:var(--red2);transform:translateY(-1px);box-shadow:0 4px 20px var(--glow)}
+/* ===== WHEEL ===== */
+.wheels-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:2rem}
+.wheel-card{background:var(--bg3);border:1px solid var(--border2);padding:1.5rem;position:relative;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
+.wheel-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--red),transparent)}
+.wheel-title{font-size:1rem;color:var(--gold2);letter-spacing:0.15em;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+
+/* Canvas wheel container */
+.wheel-wrap{position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.wheel-canvas-wrap{position:relative;display:inline-block}
+canvas.wheel-canvas{display:block;border-radius:50%;filter:drop-shadow(0 0 20px rgba(192,57,43,0.5))}
+/* Pointer arrow */
+.wheel-pointer{position:absolute;left:50%;top:-18px;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--gold2);filter:drop-shadow(0 0 6px var(--gold));z-index:10}
+/* Center circle */
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90px;height:90px;background:var(--bg);border:3px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:10;cursor:pointer;transition:all 0.2s}
+.wheel-center:hover{background:var(--bg2);border-color:var(--gold2);box-shadow:0 0 16px rgba(212,160,23,0.4)}
+.wheel-center-icon{font-size:1.8rem;line-height:1}
+.wheel-center-text{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--gold);text-align:center;text-transform:uppercase;margin-top:2px}
+
+/* Result box */
+.wheel-result{background:var(--bg2);border:1px solid var(--border2);padding:0.8rem 1rem;text-align:center;min-height:70px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.2rem;margin-bottom:0.8rem;position:relative;overflow:hidden}
+.wheel-result::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--red),transparent)}
+.result-label{color:var(--text3);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase}
+.result-name{color:var(--gold2);font-family:'Cinzel',serif;font-size:1.05rem;line-height:1.2}
+.result-desc{color:var(--text2);font-size:0.75rem;line-height:1.3;max-width:280px;text-align:center}
+.btn-spin{width:100%;background:linear-gradient(135deg,var(--red),#8b1a1a);color:#fff;border:none;padding:0.85rem;font-family:'Cinzel',serif;font-size:0.88rem;letter-spacing:0.15em;cursor:pointer;text-transform:uppercase;transition:all 0.25s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);position:relative;overflow:hidden}
+.btn-spin::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);pointer-events:none}
+.btn-spin:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 24px var(--glow);background:linear-gradient(135deg,var(--red2),var(--red))}
 .btn-spin:disabled{opacity:0.5;cursor:not-allowed;transform:none}
 
-/* BUILD */
-.build-buttons{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
-.btn-build{
-  background:transparent;border:2px solid var(--red);color:var(--text);
-  padding:1rem 2rem;font-family:'Cinzel',serif;font-size:0.9rem;
-  letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.3s;
-  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
-}
+/* ===== BUILD ===== */
+.build-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.btn-build{background:transparent;border:2px solid var(--red);color:var(--text);padding:1rem 1.8rem;font-family:'Cinzel',serif;font-size:0.88rem;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)}
 .btn-build:hover{background:var(--red);box-shadow:0 0 20px var(--glow)}
-.build-result{
-  background:var(--bg3);border:1px solid var(--border2);padding:1.5rem;display:none;
-  clip-path:polygon(0 0,calc(100% - 15px) 0,100% 15px,100% 100%,0 100%);
-  animation:fadeIn 0.4s ease;
-}
+.build-result{background:var(--bg3);border:1px solid var(--border2);padding:1.5rem;display:none;animation:fadeIn 0.4s ease;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%)}
 .build-result.show{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.build-result-title{color:var(--gold2);font-family:'Cinzel',serif;letter-spacing:0.15em;margin-bottom:1.2rem;font-size:1.1rem}
-.build-killer-banner{
-  background:var(--bg2);border:1px solid var(--border2);padding:1rem 1.5rem;
-  margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;
-}
-.killer-badge{
-  width:52px;height:52px;background:var(--red);display:flex;align-items:center;
-  justify-content:center;font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;
-  color:#fff;flex-shrink:0;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);
-}
-.killer-name-big{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold2)}
-.killer-power{color:var(--text3);font-size:0.85rem;margin-top:0.2rem}
-.perks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-.perk-card{
-  background:var(--bg2);border:1px solid var(--border);padding:1rem;transition:border-color 0.2s;
-  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);
-  animation:fadeIn 0.4s ease;
-}
-.perk-card:hover{border-color:var(--border2)}
-.perk-card-icon{
-  width:40px;height:40px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;
-  display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;
-  font-weight:700;font-size:0.9rem;color:var(--gold);margin-bottom:0.75rem;
-}
-.perk-card-type{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.2rem}
-.perk-card-name{font-family:'Cinzel',serif;font-size:0.95rem;color:var(--gold2);margin-bottom:0.5rem}
-.perk-card-desc{font-size:0.78rem;color:var(--text2);line-height:1.4}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.build-killer-banner{background:var(--bg2);border:1px solid var(--border2);padding:1rem 1.5rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem}
+.killer-badge{width:52px;height:52px;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:900;font-size:1.1rem;color:#fff;flex-shrink:0;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
+.killer-name-big{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold2)}
+.killer-power{color:var(--text3);font-size:0.82rem;margin-top:0.2rem}
+.perks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem}
+.perk-card{background:var(--bg2);border:1px solid var(--border);padding:0.9rem;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);animation:fadeIn 0.4s ease}
+.perk-card-icon{width:38px;height:38px;background:var(--bg3);border:1px solid var(--border2);border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:700;font-size:0.85rem;color:var(--gold);margin-bottom:0.6rem}
+.perk-card-type{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.15rem}
+.perk-card-name{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--gold2);margin-bottom:0.4rem}
+.perk-card-desc{font-size:0.75rem;color:var(--text2);line-height:1.35}
 
-/* HISTORY */
+/* ===== HISTORY ===== */
 .history-wrap{background:var(--bg3);border:1px solid var(--border2);overflow:auto}
-.history-table{width:100%;border-collapse:collapse;min-width:500px}
-.history-table th{
-  text-align:left;padding:0.75rem 1rem;font-size:0.75rem;letter-spacing:0.15em;
-  text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border2);
-  font-family:'Cinzel',serif;font-weight:400;white-space:nowrap;
-}
-.history-table td{padding:0.75rem 1rem;border-bottom:1px solid var(--border);font-size:0.9rem;color:var(--text2)}
+.history-table{width:100%;border-collapse:collapse;min-width:480px}
+.history-table th{text-align:left;padding:0.7rem 1rem;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border2);font-family:'Cinzel',serif;font-weight:400;white-space:nowrap}
+.history-table td{padding:0.7rem 1rem;border-bottom:1px solid var(--border);font-size:0.88rem;color:var(--text2)}
 .history-table tr:hover td{background:rgba(255,255,255,0.02);color:var(--text)}
-.badge-type{display:inline-block;padding:0.2rem 0.6rem;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;border-radius:2px}
+.badge-type{display:inline-block;padding:0.18rem 0.55rem;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;border-radius:2px}
 .badge-surv{background:rgba(52,152,219,0.15);color:#5dade2;border:1px solid rgba(52,152,219,0.3)}
 .badge-kill{background:rgba(192,57,43,0.15);color:var(--red3);border:1px solid rgba(192,57,43,0.3)}
 .badge-build{background:rgba(212,160,23,0.15);color:var(--gold2);border:1px solid rgba(212,160,23,0.3)}
 .history-empty{text-align:center;padding:3rem;color:var(--text3)}
 
-/* ADMIN */
-.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
-@media(max-width:900px){.admin-grid{grid-template-columns:1fr}}
-.admin-panel{background:var(--bg3);border:1px solid var(--border2);padding:1.5rem}
-.admin-panel h3{font-size:1rem;color:var(--gold2);letter-spacing:0.15em;margin-bottom:1.2rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem}
-.admin-form{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.2rem}
-.admin-form input,.admin-form textarea,.admin-form select{
-  background:var(--bg2);border:1px solid var(--border2);color:var(--text);
-  padding:0.6rem 0.8rem;font-family:'Rajdhani',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;
-}
+/* ===== ADMIN ===== */
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:850px){.admin-grid{grid-template-columns:1fr}}
+.admin-panel{background:var(--bg3);border:1px solid var(--border2);padding:1.3rem}
+.admin-panel h3{font-size:0.9rem;color:var(--gold2);letter-spacing:0.15em;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:0.6rem}
+.admin-form{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:1rem}
+.admin-form input,.admin-form textarea,.admin-form select{background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:0.55rem 0.75rem;font-family:'Rajdhani',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s}
 .admin-form input:focus,.admin-form textarea:focus,.admin-form select:focus{border-color:var(--red)}
-.admin-form textarea{resize:vertical;min-height:80px}
-.btn-admin{
-  background:var(--red);color:#fff;border:none;padding:0.6rem 1.2rem;
-  font-family:'Rajdhani',sans-serif;font-size:0.9rem;letter-spacing:0.1em;
-  cursor:pointer;text-transform:uppercase;transition:all 0.2s;
-}
+.admin-form textarea{resize:vertical;min-height:70px}
+.btn-admin{background:var(--red);color:#fff;border:none;padding:0.55rem 1.1rem;font-family:'Rajdhani',sans-serif;font-size:0.88rem;letter-spacing:0.08em;cursor:pointer;text-transform:uppercase;transition:all 0.2s}
 .btn-admin:hover{background:var(--red2)}
 .btn-admin.secondary{background:transparent;border:1px solid var(--border2);color:var(--text2)}
 .btn-admin.secondary:hover{border-color:var(--red);color:var(--red);background:transparent}
-.admin-list{max-height:280px;overflow-y:auto}
-.admin-item{display:flex;align-items:center;justify-content:space-between;padding:0.5rem 0.75rem;border-bottom:1px solid var(--border);font-size:0.85rem;gap:0.5rem}
+.admin-list{max-height:260px;overflow-y:auto}
+.admin-item{display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.7rem;border-bottom:1px solid var(--border);font-size:0.82rem}
 .admin-item:hover{background:var(--bg2)}
 .admin-item-name{color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.admin-item-type{color:var(--text3);font-size:0.72rem;flex-shrink:0}
-.admin-item-actions{display:flex;gap:0.25rem;flex-shrink:0}
-.btn-del,.btn-edit-item{background:transparent;border:none;cursor:pointer;font-size:0.85rem;padding:0.2rem 0.5rem;transition:color 0.2s;font-family:'Rajdhani',sans-serif}
+.admin-item-type{color:var(--text3);font-size:0.7rem;flex-shrink:0}
+.admin-item-actions{display:flex;gap:0.2rem;flex-shrink:0}
+.btn-del,.btn-edit-item{background:transparent;border:none;cursor:pointer;font-size:0.82rem;padding:0.2rem 0.45rem;transition:color 0.2s;font-family:'Rajdhani',sans-serif}
 .btn-del{color:var(--text3)}.btn-del:hover{color:var(--red3)}
 .btn-edit-item{color:var(--text3)}.btn-edit-item:hover{color:var(--gold)}
-.admin-msg{font-size:0.8rem;margin-top:0.5rem;min-height:1.1em}
+.admin-msg{font-size:0.78rem;margin-top:0.4rem;min-height:1em}
 .admin-msg.ok{color:#2ecc71}.admin-msg.err{color:var(--red3)}
 
-/* WINNER MODAL */
+/* ===== WINNER MODAL ===== */
 .winner-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:none;align-items:center;justify-content:center;z-index:2000}
 .winner-overlay.show{display:flex}
-.winner-modal{
-  background:var(--bg3);border:2px solid var(--gold);padding:3rem;text-align:center;
-  max-width:480px;width:90vw;animation:winnerIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
-  position:relative;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%);
-}
-@keyframes winnerIn{from{transform:scale(0.4) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(0deg);opacity:1}}
-.winner-modal::before{
-  content:'✦ RESULTADO ✦';position:absolute;top:-14px;left:50%;transform:translateX(-50%);
-  background:var(--gold);color:var(--bg);padding:0.2rem 1.2rem;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.2em;white-space:nowrap;
-}
-.winner-name{font-family:'Cinzel',serif;font-size:2rem;color:var(--gold2);margin-bottom:0.5rem;line-height:1.1}
-.winner-sub{color:var(--text2);font-size:0.95rem;margin-bottom:1.5rem;line-height:1.4;max-width:360px;margin-left:auto;margin-right:auto}
-.btn-close-winner{background:var(--red);color:#fff;border:none;padding:0.75rem 2rem;font-family:'Cinzel',serif;letter-spacing:0.15em;cursor:pointer;text-transform:uppercase;font-size:0.9rem;transition:background 0.2s}
+.winner-modal{background:var(--bg3);border:2px solid var(--gold);padding:2.5rem;text-align:center;max-width:460px;width:90vw;animation:winnerIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);position:relative;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%)}
+@keyframes winnerIn{from{transform:scale(0.4) rotate(-5deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.winner-modal::before{content:'✦ RESULTADO ✦';position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--bg);padding:0.18rem 1.1rem;font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.2em;white-space:nowrap}
+.winner-icon{font-size:3.5rem;margin-bottom:0.5rem;animation:bounceIn 0.6s 0.3s both}
+@keyframes bounceIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+.winner-name{font-family:'Cinzel',serif;font-size:1.8rem;color:var(--gold2);margin-bottom:0.4rem;line-height:1.1}
+.winner-sub{color:var(--text2);font-size:0.9rem;margin-bottom:1.3rem;line-height:1.4;max-width:340px;margin-left:auto;margin-right:auto}
+.btn-close-winner{background:var(--red);color:#fff;border:none;padding:0.7rem 1.8rem;font-family:'Cinzel',serif;letter-spacing:0.15em;cursor:pointer;text-transform:uppercase;font-size:0.88rem;transition:background 0.2s}
 .btn-close-winner:hover{background:var(--red2)}
 .winner-sparks{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.spark{position:absolute;width:4px;height:4px;background:var(--gold2);animation:spark 1s ease-out forwards;border-radius:50%}
+.spark{position:absolute;border-radius:50%;animation:spark 1.2s ease-out forwards}
 @keyframes spark{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
 
-/* OBS OVERLAY */
-#obs-overlay{
-  position:fixed;bottom:2rem;right:2rem;
-  background:rgba(10,10,15,0.93);border:1px solid var(--red);border-top:2px solid var(--red);
-  padding:1.2rem 1.5rem;max-width:380px;
-  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
-  display:none;z-index:500;backdrop-filter:blur(8px);animation:fadeIn 0.3s ease;
-}
-#obs-overlay.show{display:block}
-.obs-label{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-bottom:0.3rem}
-.obs-result{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold2);line-height:1.2}
-.obs-sub{color:var(--text2);font-size:0.82rem;margin-top:0.3rem}
-.obs-perks{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
-.obs-perk-tag{background:rgba(192,57,43,0.2);border:1px solid rgba(192,57,43,0.4);padding:0.2rem 0.5rem;font-size:0.72rem;color:var(--text)}
-.obs-close{position:absolute;top:0.5rem;right:0.5rem;background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:1rem}
+/* ===== OBS OVERLAY ===== */
+#obs-overlay{position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(10,10,15,0.93);border:1px solid var(--red);border-top:2px solid var(--red);padding:1rem 1.3rem;max-width:360px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);display:none;z-index:500;backdrop-filter:blur(10px)}
+#obs-overlay.show{display:block;animation:fadeIn 0.3s ease}
+.obs-label{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-bottom:0.25rem}
+.obs-result{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--gold2);line-height:1.2}
+.obs-sub{color:var(--text2);font-size:0.78rem;margin-top:0.25rem}
+.obs-perks{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.6rem}
+.obs-perk-tag{background:rgba(192,57,43,0.2);border:1px solid rgba(192,57,43,0.4);padding:0.18rem 0.45rem;font-size:0.7rem;color:var(--text)}
+.obs-close{position:absolute;top:0.4rem;right:0.4rem;background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:0.9rem}
 .obs-close:hover{color:var(--red3)}
 
-/* RESPONSIVE */
+/* ===== OBS MODE ===== */
+body.obs-mode{background:transparent !important}
+body.obs-mode #app{background:transparent}
+body.obs-mode .topbar,body.obs-mode .page:not(#page-ruletas){display:none !important}
+body.obs-mode #page-ruletas{display:block !important;background:transparent}
+body.obs-mode .wheel-card{background:rgba(10,10,15,0.85);backdrop-filter:blur(8px)}
+
+/* ===== RESPONSIVE ===== */
 @media(max-width:700px){
-  .roulettes-grid{grid-template-columns:1fr}
-  .build-buttons{flex-direction:column}
+  .wheels-grid{grid-template-columns:1fr}
+  .build-btns{flex-direction:column}
   .btn-build{text-align:center}
   .admin-grid{grid-template-columns:1fr}
   .perks-grid{grid-template-columns:1fr 1fr}
 }
-@media(max-width:480px){
-  .perks-grid{grid-template-columns:1fr}
-  .topbar{padding:0.75rem 1rem}
-  .page{padding:1.5rem 1rem}
-}
+@media(max-width:450px){.perks-grid{grid-template-columns:1fr}.page{padding:1rem}}
 </style>
 </head>
 <body>
@@ -300,33 +202,24 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
 <div id="login-screen">
   <div class="login-box">
     <div class="entity-logo">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M40 5 L70 20 L70 60 L40 75 L10 60 L10 20 Z" stroke="#c0392b" stroke-width="1.5" fill="none" opacity="0.4"/>
-        <path d="M40 15 L62 27 L62 53 L40 65 L18 53 L18 27 Z" stroke="#d4a017" stroke-width="1" fill="none" opacity="0.6"/>
-        <path d="M40 8 L40 72 M8 40 L72 40" stroke="#c0392b" stroke-width="0.5" opacity="0.3"/>
+      <svg width="70" height="70" viewBox="0 0 80 80" fill="none">
+        <path d="M40 5L70 20V60L40 75L10 60V20Z" stroke="#c0392b" stroke-width="1.5" fill="none" opacity="0.4"/>
+        <path d="M40 15L62 27V53L40 65L18 53V27Z" stroke="#d4a017" stroke-width="1" fill="none" opacity="0.6"/>
         <circle cx="40" cy="40" r="8" fill="#c0392b" opacity="0.8"/>
         <circle cx="40" cy="40" r="4" fill="#d4a017"/>
-        <path d="M40 10 L43 33 L40 36 L37 33 Z" fill="#c0392b" opacity="0.7"/>
-        <path d="M70 40 L47 43 L44 40 L47 37 Z" fill="#c0392b" opacity="0.7"/>
-        <path d="M40 70 L37 47 L40 44 L43 47 Z" fill="#c0392b" opacity="0.7"/>
-        <path d="M10 40 L33 37 L36 40 L33 43 Z" fill="#c0392b" opacity="0.7"/>
+        <path d="M40 10L43 33L40 36L37 33Z" fill="#c0392b" opacity="0.7"/>
+        <path d="M70 40L47 43L44 40L47 37Z" fill="#c0392b" opacity="0.7"/>
+        <path d="M40 70L37 47L40 44L43 47Z" fill="#c0392b" opacity="0.7"/>
+        <path d="M10 40L33 37L36 40L33 43Z" fill="#c0392b" opacity="0.7"/>
       </svg>
     </div>
     <h1 class="login-title">DBD STREAM</h1>
     <p class="login-sub">Panel de Control para Transmisiones</p>
-    <div class="field">
-      <label>Usuario</label>
-      <input type="text" id="login-user" placeholder="admin" autocomplete="username">
-    </div>
-    <div class="field">
-      <label>Contraseña</label>
-      <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
-    </div>
+    <div class="field"><label>Usuario</label><input type="text" id="login-user" placeholder="admin" autocomplete="username"></div>
+    <div class="field"><label>Contraseña</label><input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"></div>
     <button class="btn-login" onclick="doLogin()">⚡ Ingresar al Campamento</button>
     <div class="login-error" id="login-error"></div>
-    <div style="text-align:center;margin-top:1.5rem;color:var(--text3);font-size:0.75rem;letter-spacing:0.1em">
-      Usuario: admin &nbsp;|&nbsp; Contraseña: dbd2024
-    </div>
+    <div class="login-hint">Usuario: admin &nbsp;|&nbsp; Contraseña: dbd2024</div>
   </div>
 </div>
 
@@ -334,6 +227,7 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
 <div class="winner-overlay" id="winner-overlay" onclick="closeWinner()">
   <div class="winner-modal" onclick="event.stopPropagation()">
     <div class="winner-sparks" id="sparks"></div>
+    <div class="winner-icon" id="winner-icon">🎰</div>
     <div class="winner-name" id="winner-name"></div>
     <div class="winner-sub" id="winner-sub"></div>
     <button class="btn-close-winner" onclick="closeWinner()">Continuar</button>
@@ -342,7 +236,7 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
 
 <!-- OBS OVERLAY -->
 <div id="obs-overlay">
-  <button class="obs-close" onclick="toggleOBS()" title="Cerrar OBS">✕</button>
+  <button class="obs-close" onclick="toggleOBS()">✕</button>
   <div class="obs-label" id="obs-label">Último resultado</div>
   <div class="obs-result" id="obs-result">Sin resultados aún</div>
   <div class="obs-sub" id="obs-sub"></div>
@@ -353,150 +247,141 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
 <div id="app">
   <div class="topbar">
     <div class="topbar-logo">
-      <svg viewBox="0 0 28 28" fill="none">
-        <path d="M14 2 L24 8 L24 20 L14 26 L4 20 L4 8 Z" stroke="#d4a017" stroke-width="1" fill="none"/>
-        <circle cx="14" cy="14" r="4" fill="#c0392b"/>
-        <circle cx="14" cy="14" r="2" fill="#d4a017"/>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none"><path d="M14 2L24 8V20L14 26L4 20V8Z" stroke="#d4a017" stroke-width="1" fill="none"/><circle cx="14" cy="14" r="4" fill="#c0392b"/><circle cx="14" cy="14" r="2" fill="#d4a017"/></svg>
       DBD STREAM TOOLS
     </div>
     <div class="nav-tabs">
-      <button class="nav-tab active" id="tab-ruletas" onclick="showPage('ruletas',this)">⚙ Ruletas</button>
-      <button class="nav-tab" id="tab-builds" onclick="showPage('builds',this)">⚔ Builds</button>
-      <button class="nav-tab" id="tab-historial" onclick="showPage('historial',this)">📋 Historial</button>
-      <button class="nav-tab" id="tab-admin" onclick="showPage('admin',this)">🔧 Admin</button>
+      <button class="nav-tab active" onclick="showPage('ruletas',this)">⚙ Ruletas</button>
+      <button class="nav-tab" onclick="showPage('builds',this)">⚔ Builds</button>
+      <button class="nav-tab" onclick="showPage('historial',this)">📋 Historial</button>
+      <button class="nav-tab" onclick="showPage('admin',this)">🔧 Admin</button>
     </div>
     <div class="topbar-right">
-      <button class="obs-link" onclick="toggleOBS()">🎥 OBS</button>
+      <button class="btn-obs-mode" onclick="toggleOBS()">🎥 OBS</button>
       <button class="btn-logout" onclick="doLogout()">Salir</button>
     </div>
   </div>
 
-  <!-- PÁGINA RULETAS -->
+  <!-- RULETAS -->
   <div class="page active" id="page-ruletas">
-    <div class="section-header">
+    <div class="sec-header">
       <h2>RULETAS</h2>
-      <p>Gira para obtener perks y asesinos aleatorios para tu partida</p>
-      <div class="section-divider"></div>
+      <p>Haz clic en el centro de la ruleta o en el botón para girar</p>
+      <div class="sec-divider"></div>
     </div>
-    <div class="roulettes-grid">
-      <div class="roulette-card">
-        <div class="roulette-title">🔵 Perks de Superviviente</div>
-        <div class="roulette-display">
-          <div class="roulette-track" id="surv-track"></div>
-          <div class="roulette-overlay"></div>
-          <div class="roulette-selector"></div>
+    <div class="wheels-grid">
+      <!-- Superviviente -->
+      <div class="wheel-card">
+        <div class="wheel-title">🔵 Perks de Superviviente</div>
+        <div class="wheel-wrap">
+          <div class="wheel-canvas-wrap">
+            <div class="wheel-pointer"></div>
+            <canvas class="wheel-canvas" id="surv-canvas" width="320" height="320"></canvas>
+            <div class="wheel-center" onclick="spinWheel('surv')" id="surv-center">
+              <div class="wheel-center-icon">🔵</div>
+              <div class="wheel-center-text">GIRAR</div>
+            </div>
+          </div>
         </div>
-        <div class="roulette-result">
+        <div class="wheel-result">
           <div class="result-label">Perk seleccionada</div>
           <div class="result-name" id="surv-result-name">—</div>
-          <div class="result-desc" id="surv-result-desc">Gira la ruleta para comenzar</div>
+          <div class="result-desc" id="surv-result-desc">Haz clic en el centro para girar</div>
         </div>
-        <button class="btn-spin" id="surv-btn" onclick="spinRoulette('surv')">🎰 GIRAR RULETA</button>
+        <button class="btn-spin" id="surv-btn" onclick="spinWheel('surv')">🎰 GIRAR RULETA</button>
       </div>
-      <div class="roulette-card">
-        <div class="roulette-title">🔴 Perks de Asesino</div>
-        <div class="roulette-display">
-          <div class="roulette-track" id="kill-track"></div>
-          <div class="roulette-overlay"></div>
-          <div class="roulette-selector"></div>
+      <!-- Asesino perks -->
+      <div class="wheel-card">
+        <div class="wheel-title">🔴 Perks de Asesino</div>
+        <div class="wheel-wrap">
+          <div class="wheel-canvas-wrap">
+            <div class="wheel-pointer"></div>
+            <canvas class="wheel-canvas" id="kill-canvas" width="320" height="320"></canvas>
+            <div class="wheel-center" onclick="spinWheel('kill')" id="kill-center">
+              <div class="wheel-center-icon">🔴</div>
+              <div class="wheel-center-text">GIRAR</div>
+            </div>
+          </div>
         </div>
-        <div class="roulette-result">
+        <div class="wheel-result">
           <div class="result-label">Perk seleccionada</div>
           <div class="result-name" id="kill-result-name">—</div>
-          <div class="result-desc" id="kill-result-desc">Gira la ruleta para comenzar</div>
+          <div class="result-desc" id="kill-result-desc">Haz clic en el centro para girar</div>
         </div>
-        <button class="btn-spin" id="kill-btn" onclick="spinRoulette('kill')">🎰 GIRAR RULETA</button>
+        <button class="btn-spin" id="kill-btn" onclick="spinWheel('kill')">🎰 GIRAR RULETA</button>
       </div>
-      <div class="roulette-card">
-        <div class="roulette-title">💀 Asesino</div>
-        <div class="roulette-display">
-          <div class="roulette-track" id="killer-track"></div>
-          <div class="roulette-overlay"></div>
-          <div class="roulette-selector"></div>
+      <!-- Asesinos -->
+      <div class="wheel-card">
+        <div class="wheel-title">💀 Asesino</div>
+        <div class="wheel-wrap">
+          <div class="wheel-canvas-wrap">
+            <div class="wheel-pointer"></div>
+            <canvas class="wheel-canvas" id="killer-canvas" width="320" height="320"></canvas>
+            <div class="wheel-center" onclick="spinWheel('killer')" id="killer-center">
+              <div class="wheel-center-icon">💀</div>
+              <div class="wheel-center-text">GIRAR</div>
+            </div>
+          </div>
         </div>
-        <div class="roulette-result">
+        <div class="wheel-result">
           <div class="result-label">Asesino seleccionado</div>
           <div class="result-name" id="killer-result-name">—</div>
-          <div class="result-desc" id="killer-result-desc">Gira la ruleta para comenzar</div>
+          <div class="result-desc" id="killer-result-desc">Haz clic en el centro para girar</div>
         </div>
-        <button class="btn-spin" id="killer-btn" onclick="spinRoulette('killer')">🎰 GIRAR RULETA</button>
+        <button class="btn-spin" id="killer-btn" onclick="spinWheel('killer')">🎰 GIRAR RULETA</button>
       </div>
     </div>
   </div>
 
-  <!-- PÁGINA BUILDS -->
+  <!-- BUILDS -->
   <div class="page" id="page-builds">
-    <div class="section-header">
-      <h2>GENERADOR DE BUILDS</h2>
-      <p>Genera builds completas y aleatorias para superviviente o asesino</p>
-      <div class="section-divider"></div>
-    </div>
-    <div class="build-buttons">
-      <button class="btn-build" onclick="generateBuild('surv')">⚡ Generar Build Completa Superviviente</button>
-      <button class="btn-build" onclick="generateBuild('killer')">🩸 Generar Build Completa Asesino</button>
+    <div class="sec-header"><h2>GENERADOR DE BUILDS</h2><p>Builds completas aleatorias para superviviente o asesino</p><div class="sec-divider"></div></div>
+    <div class="build-btns">
+      <button class="btn-build" onclick="generateBuild('surv')">⚡ Build Completa Superviviente</button>
+      <button class="btn-build" onclick="generateBuild('killer')">🩸 Build Completa Asesino</button>
     </div>
     <div class="build-result" id="build-result">
-      <div class="build-result-title" id="build-result-title">BUILD GENERADA</div>
+      <div style="color:var(--gold2);font-family:'Cinzel',serif;letter-spacing:0.15em;margin-bottom:1rem;font-size:1rem" id="build-result-title">BUILD GENERADA</div>
       <div id="build-killer-section"></div>
       <div class="perks-grid" id="build-perks"></div>
     </div>
   </div>
 
-  <!-- PÁGINA HISTORIAL -->
+  <!-- HISTORIAL -->
   <div class="page" id="page-historial">
-    <div class="section-header">
-      <h2>HISTORIAL DE TIRADAS</h2>
-      <p>Registro completo de todos los resultados de la sesión</p>
-      <div class="section-divider"></div>
-    </div>
+    <div class="sec-header"><h2>HISTORIAL DE TIRADAS</h2><p>Registro de todos los resultados de la sesión</p><div class="sec-divider"></div></div>
     <div class="history-wrap">
       <table class="history-table">
-        <thead>
-          <tr>
-            <th>#</th><th>Tipo</th><th>Resultado</th><th>Perks</th><th>Hora</th>
-          </tr>
-        </thead>
-        <tbody id="history-body">
-          <tr><td colspan="5" class="history-empty">No hay tiradas registradas aún. ¡Gira una ruleta!</td></tr>
-        </tbody>
+        <thead><tr><th>#</th><th>Tipo</th><th>Resultado</th><th>Perks</th><th>Hora</th></tr></thead>
+        <tbody id="history-body"><tr><td colspan="5" class="history-empty">No hay tiradas aún. ¡Gira una ruleta!</td></tr></tbody>
       </table>
     </div>
-    <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+    <div style="margin-top:0.8rem;display:flex;justify-content:flex-end">
       <button class="btn-admin secondary" onclick="clearHistory()">🗑 Limpiar Historial</button>
     </div>
   </div>
 
-  <!-- PÁGINA ADMIN -->
+  <!-- ADMIN -->
   <div class="page" id="page-admin">
-    <div class="section-header">
-      <h2>PANEL DE ADMINISTRACIÓN</h2>
-      <p>Gestiona perks, asesinos y configuración del sistema</p>
-      <div class="section-divider"></div>
-    </div>
+    <div class="sec-header"><h2>ADMINISTRACIÓN</h2><p>Gestiona perks y asesinos del sistema</p><div class="sec-divider"></div></div>
     <div class="admin-grid">
       <div class="admin-panel">
         <h3>AGREGAR / EDITAR PERK</h3>
         <div class="admin-form">
           <input type="hidden" id="edit-perk-id">
           <input type="text" id="new-perk-name" placeholder="Nombre de la perk">
-          <select id="new-perk-type">
-            <option value="surv">Superviviente</option>
-            <option value="kill">Asesino</option>
-          </select>
-          <textarea id="new-perk-desc" placeholder="Descripción de la perk"></textarea>
+          <select id="new-perk-type"><option value="surv">Superviviente</option><option value="kill">Asesino</option></select>
+          <textarea id="new-perk-desc" placeholder="Descripción"></textarea>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            <button class="btn-admin" onclick="savePerk()">Guardar Perk</button>
+            <button class="btn-admin" onclick="savePerk()">Guardar</button>
             <button class="btn-admin secondary" onclick="cancelEditPerk()" id="cancel-perk-btn" style="display:none">Cancelar</button>
           </div>
         </div>
         <div class="admin-msg" id="perk-msg"></div>
-        <h3 style="margin-top:1.2rem">PERKS ACTUALES <span id="perk-count" style="font-size:0.8rem;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:400"></span></h3>
-        <div style="margin-bottom:0.75rem">
-          <select id="filter-perk-type" onchange="renderPerkAdmin()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:0.4rem 0.6rem;font-family:'Rajdhani',sans-serif;font-size:0.85rem;outline:none">
-            <option value="all">Todas las perks</option>
-            <option value="surv">Solo Superviviente</option>
-            <option value="kill">Solo Asesino</option>
+        <h3 style="margin-top:1rem">PERKS <span id="perk-count" style="font-size:0.75rem;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:400"></span></h3>
+        <div style="margin-bottom:0.6rem">
+          <select id="filter-perk-type" onchange="renderPerkAdmin()" style="background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:0.35rem 0.6rem;font-family:'Rajdhani',sans-serif;font-size:0.82rem;outline:none">
+            <option value="all">Todas</option><option value="surv">Superviviente</option><option value="kill">Asesino</option>
           </select>
         </div>
         <div class="admin-list" id="perk-admin-list"></div>
@@ -506,15 +391,15 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
         <div class="admin-form">
           <input type="hidden" id="edit-killer-id">
           <input type="text" id="new-killer-name" placeholder="Nombre del asesino">
-          <input type="text" id="new-killer-power" placeholder="Poder especial (ej: Las Trampas)">
-          <textarea id="new-killer-desc" placeholder="Descripción breve del asesino"></textarea>
+          <input type="text" id="new-killer-power" placeholder="Poder especial">
+          <textarea id="new-killer-desc" placeholder="Descripción"></textarea>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-            <button class="btn-admin" onclick="saveKiller()">Guardar Asesino</button>
+            <button class="btn-admin" onclick="saveKiller()">Guardar</button>
             <button class="btn-admin secondary" onclick="cancelEditKiller()" id="cancel-killer-btn" style="display:none">Cancelar</button>
           </div>
         </div>
         <div class="admin-msg" id="killer-msg"></div>
-        <h3 style="margin-top:1.2rem">ASESINOS ACTUALES <span id="killer-count" style="font-size:0.8rem;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:400"></span></h3>
+        <h3 style="margin-top:1rem">ASESINOS <span id="killer-count" style="font-size:0.75rem;color:var(--text3);font-family:'Rajdhani',sans-serif;font-weight:400"></span></h3>
         <div class="admin-list" id="killer-admin-list"></div>
       </div>
     </div>
@@ -522,523 +407,395 @@ h1,h2,h3,h4{font-family:'Cinzel',serif}
 </div>
 
 <script>
-// ===================== CREDENCIALES =====================
-// Puedes cambiar usuario y contraseña aquí:
-const CREDS = { user: 'admin', pass: 'dbd2024' };
+// =================== CREDENCIALES ===================
+const CREDS = { user:'admin', pass:'dbd2024' };
 
-// ===================== BASE DE DATOS =====================
+// =================== COLORES RULETA ===================
+const WHEEL_COLORS = [
+  ['#8B1A1A','#C0392B'],['#1A3A8B','#2980B9'],['#1A8B3A','#27AE60'],
+  ['#7B1A8B','#9B59B6'],['#8B5A1A','#D4A017'],['#1A7B8B','#1ABC9C'],
+  ['#8B3A1A','#E67E22'],['#3A1A8B','#8E44AD'],['#1A8B5A','#2ECC71'],
+  ['#8B1A5A','#E91E8C'],['#5A8B1A','#7DC21E'],['#1A5A8B','#3498DB'],
+];
+
+// =================== BASE DE DATOS ===================
 let DB = {
-  perks: [
-    // SUPERVIVIENTE
-    {id:1,type:'surv',name:'Empatía',desc:'Ves las auras de otros supervivientes heridos, desmayados o siendo cargados por el asesino en cualquier distancia.'},
-    {id:2,type:'surv',name:'Determinación Firme',desc:'Reduces el tiempo de revivir a un compañero un 50%. Al rescatarlo, ambos reciben un impulso de velocidad.'},
-    {id:3,type:'surv',name:'Ladrón',desc:'Puedes desenchufar ganchos sin herramientas. Ves el aura del asesino cuando está a 16m de ti.'},
-    {id:4,type:'surv',name:'Pequeño y Veloz',desc:'Tu estado de aura no se revela al agacharte. El asesino no oye tus jadeos de cansancio al correr.'},
-    {id:5,type:'surv',name:'Golpe Decisivo',desc:'Cuando seas cargado tras escapar de un gancho, puedes propinar un golpe aturdidor al asesino y escapar.'},
-    {id:6,type:'surv',name:'Botiquín Improvisado',desc:'Puedes fabricar un botiquín a partir de objetos del terreno. Se recarga al revivir compañeros con éxito.'},
-    {id:7,type:'surv',name:'Segunda Oportunidad',desc:'Si estás a punto de quedar inconsciente, activas una ráfaga de velocidad durante 5 segundos para escapar.'},
-    {id:8,type:'surv',name:'Vigilia',desc:'Reduces el tiempo de reparación de generadores al trabajar junto a otros supervivientes. Comparten auras.'},
-    {id:9,type:'surv',name:'Corredor',desc:'Después de una persecución, obtienes un 10% de velocidad extra durante 3 segundos al alejarte del asesino.'},
-    {id:10,type:'surv',name:'Aura de Curación',desc:'Puedes curar a compañeros a distancia cuando llevas 30 segundos al 100% de salud sin recibir daño.'},
-    {id:11,type:'surv',name:'Presencia Espiritual',desc:'Detectas generadores completados a 32m. Ves el aura del asesino durante 5s al completar un generador.'},
-    {id:12,type:'surv',name:'Sabotaje',desc:'Puedes inutilizar ganchos del asesino con las manos sin herramientas. Requiere 2.5 segundos de acción.'},
-    {id:13,type:'surv',name:'Resistencia',desc:'Mientras eres cargado, tienes un 10% de probabilidad de resistir el ataque inicial y escapar de los brazos del asesino.'},
-    {id:14,type:'surv',name:'Oculto en las Sombras',desc:'Tu aura no se revela al asesino durante los primeros 60 segundos de la partida. Ideal para inicio sigiloso.'},
-    {id:15,type:'surv',name:'Fuerza Interior',desc:'Después de esconderte 10 segundos en un armario, te curas completamente una lesión al salir de él.'},
-    {id:16,type:'surv',name:'Instinto de Supervivencia',desc:'Mientras un generador se explota, ves el aura del asesino durante 6 segundos. Muy útil para reaccionar.'},
-    {id:17,type:'surv',name:'Vínculo Inquebrantable',desc:'Puedes ver el aura de todos los supervivientes en todo momento. Excelente para coordinar el equipo.'},
-    {id:18,type:'surv',name:'Corazón Indomable',desc:'Mientras corres, tu jadeo de cansancio desaparece mucho más rápido que lo normal.'},
-    {id:19,type:'surv',name:'Botín de Guerra',desc:'Al inicio de la partida, el primer cofre que abras siempre contiene un objeto de rareza muy rara o ultra rara.'},
-    {id:20,type:'surv',name:'Alerta',desc:'Cuando el asesino golpea un palé o rompe un objeto del entorno, ves su aura durante 4 segundos.'},
-    {id:21,type:'surv',name:'Escapista',desc:'Tienes más opciones de escape al agitarte cuando estás siendo cargado. Probabilidad aumentada un 50%.'},
-    {id:22,type:'surv',name:'Trabajo en Equipo',desc:'Mientras reparas un generador con otro superviviente, la velocidad de reparación de ambos aumenta un 15%.'},
-    {id:23,type:'surv',name:'Ojos de la Oscuridad',desc:'Ves los auras de todos los supervivientes durante los primeros 30 segundos de la partida.'},
-    {id:24,type:'surv',name:'Presagio',desc:'Al inicio de la partida ves el aura de todos los generadores. Bonus de velocidad al empezar a reparar uno.'},
-    {id:25,type:'surv',name:'Descanso Rápido',desc:'Recuperas stamina un 25% más rápido después de una persecución con el asesino. Gran perk de carrera.'},
-    {id:26,type:'surv',name:'Espejo Oscuro',desc:'Ves el aura del asesino cuando estás siendo cargado o cuando estás en un gancho en cualquier distancia.'},
-    {id:27,type:'surv',name:'Premonición',desc:'Recibes una advertencia auditiva cuando el asesino está mirando directamente en tu dirección a 36m.'},
-    {id:28,type:'surv',name:'Guardián',desc:'Revivir a un superviviente de un gancho otorga velocidad de movimiento durante 10 segundos a ambos.'},
-    {id:29,type:'surv',name:'Visión en la Oscuridad',desc:'Reduces la penalización de campo visual en partidas nocturnas. Ves con más claridad en zonas sombrías.'},
-    {id:30,type:'surv',name:'Lazos de Familia',desc:'Ves las auras de todos los supervivientes a 60m. Perfecta combinación con perks de trabajo en equipo.'},
-    // ASESINO
-    {id:100,type:'kill',name:'Barbarismo',desc:'Cada golpe de básico destruye automáticamente palés y ventanas que estén bloqueando tu camino.'},
-    {id:101,type:'kill',name:'Llamada de la Oscuridad',desc:'Ves las auras de los supervivientes heridos en cualquier distancia del mapa durante toda la partida.'},
-    {id:102,type:'kill',name:'Recuerdo Amargo',desc:'Cuando un generador es completado, todos los supervivientes gritan y revelan su aura durante 4 segundos.'},
-    {id:103,type:'kill',name:'Sin Escapatoria',desc:'Cuando la última salida de emergencia es activada, ves el aura de todos los supervivientes durante 3 segundos.'},
-    {id:104,type:'kill',name:'NOED',desc:'Cuando se abren las salidas de emergencia, ganas velocidad de movimiento y la capacidad de tumbar de un golpe.'},
-    {id:105,type:'kill',name:'Fuego Interior',desc:'Cada golpe exitoso a un superviviente aumenta tu velocidad de movimiento durante 0.5 segundos adicionales.'},
-    {id:106,type:'kill',name:'Maldición: Sin Sanación',desc:'Los supervivientes pierden permanentemente el 50% de su velocidad de sanación mientras este tótem exista.'},
-    {id:107,type:'kill',name:'Perseverancia',desc:'Romper palés ya no te penaliza con tiempo de recuperación adicional. Mantienes tu velocidad de ataque.'},
-    {id:108,type:'kill',name:'Destierro',desc:'Ves el aura de todos los supervivientes durante 5 segundos al inicio de la partida. Excelente para posicionarte.'},
-    {id:109,type:'kill',name:'Paciencia Siniestra',desc:'Tras 90 segundos en calma sin atacar, tu velocidad de movimiento aumenta un 6% de forma permanente.'},
-    {id:110,type:'kill',name:'Monitor y Abuso',desc:'Tu rango de detección por aura se reduce 8m. Fuera de persecución, tu radio de terror se reduce 16m.'},
-    {id:111,type:'kill',name:'Agitador',desc:'Al inicio de la partida, 3 generadores aleatorios explotan automáticamente causando regresión inmediata.'},
-    {id:112,type:'kill',name:'Corrupción Inevitable',desc:'Al inicio de la partida, los 3 generadores más lejanos quedan bloqueados durante 120 segundos.'},
-    {id:113,type:'kill',name:'Bromas Pesadas',desc:'Los ítems que llevan los supervivientes pierden su carga un 20% más rápido mientras son usados.'},
-    {id:114,type:'kill',name:'Sello Maldito',desc:'Puedes marcar un generador. Los supervivientes que lo reparen quedan bajo el efecto Maldito indefinidamente.'},
-    {id:115,type:'kill',name:'Desolación',desc:'Cada vez que golpeas a un superviviente en estado normal, un generador aleatorio explota causando regresión.'},
-    {id:116,type:'kill',name:'Sacrificio Oscuro',desc:'Cuando enganchas a un superviviente en fase de agonía, todos los generadores en progreso retroceden.'},
-    {id:117,type:'kill',name:'Impulso Asesino',desc:'Después de enganchar a un superviviente, obtienes un aumento de velocidad de movimiento durante 15 segundos.'},
-    {id:118,type:'kill',name:'Amenaza Latente',desc:'Después de abandonar el radio de terror de un superviviente, ves su aura durante 3 segundos.'},
-    {id:119,type:'kill',name:'Trampa Mortal',desc:'Los supervivientes que queden inconscientes dentro de tu radio de terror quedan heridos al levantarse.'},
-    {id:120,type:'kill',name:'Localizador',desc:'Ves el aura de los supervivientes que reparan generadores cuando están a 32 metros o menos de ti.'},
-    {id:121,type:'kill',name:'Ira Catártica',desc:'Cada generador completado aumenta tu velocidad de ataque un 5%, acumulable hasta 3 veces por partida.'},
-    {id:122,type:'kill',name:'Miedo Absoluto',desc:'Los supervivientes dentro de 24m que estén en estado Normal gritan y revelan su posición inmediatamente.'},
-    {id:123,type:'kill',name:'Dominación',desc:'Cuando golpeas un palé, hay un 25% de probabilidad de no perder tiempo de cooldown de movimiento.'},
-    {id:124,type:'kill',name:'Presencia Abrumadora',desc:'Los supervivientes que se encuentran a 8m o menos de ti no pueden recuperar stamina mientras estés cerca.'},
-    {id:125,type:'kill',name:'Caos Controlado',desc:'Al inicio de la partida puedes ver las auras de todos los generadores durante los primeros 90 segundos.'},
-    {id:126,type:'kill',name:'Castigo del Observador',desc:'Cuando un superviviente falla una prueba de habilidad, sufre el efecto Expuesto durante 60 segundos.'},
+  perks:[
+    {id:1,type:'surv',name:'Empatía',desc:'Ves auras de supervivientes heridos en cualquier distancia.'},
+    {id:2,type:'surv',name:'Determinación Firme',desc:'Reduces tiempo de revivir un 50%. Al rescatar, ambos reciben velocidad.'},
+    {id:3,type:'surv',name:'Ladrón',desc:'Desenchufas ganchos sin herramientas. Ves aura del asesino a 16m.'},
+    {id:4,type:'surv',name:'Pequeño y Veloz',desc:'Tu aura no se revela al agacharte. El asesino no oye tus jadeos.'},
+    {id:5,type:'surv',name:'Golpe Decisivo',desc:'Al ser cargado tras escapar de un gancho, puedes aturdir al asesino.'},
+    {id:6,type:'surv',name:'Botiquín Improvisado',desc:'Fabrica un botiquín de objetos del terreno. Se recarga al revivir.'},
+    {id:7,type:'surv',name:'Segunda Oportunidad',desc:'Al punto de quedar inconsciente, obtienes 5 segundos de velocidad.'},
+    {id:8,type:'surv',name:'Vigilia',desc:'Reparas más rápido junto a compañeros. Comparten auras mutuamente.'},
+    {id:9,type:'surv',name:'Corredor',desc:'Tras una persecución, ganas 10% de velocidad extra por 3 segundos.'},
+    {id:10,type:'surv',name:'Aura de Curación',desc:'Curas compañeros a distancia tras 30 segundos al 100% de salud.'},
+    {id:11,type:'surv',name:'Presencia Espiritual',desc:'Detectas generadores completados a 32m. Ves aura del asesino al completar uno.'},
+    {id:12,type:'surv',name:'Sabotaje',desc:'Inutilizas ganchos con las manos sin herramientas en 2.5 segundos.'},
+    {id:13,type:'surv',name:'Resistencia',desc:'10% de probabilidad de resistir el ataque y escapar de los brazos.'},
+    {id:14,type:'surv',name:'Oculto en las Sombras',desc:'Tu aura no se revela al asesino durante los primeros 60 segundos.'},
+    {id:15,type:'surv',name:'Fuerza Interior',desc:'Tras 10s en armario, te curas una lesión al salir.'},
+    {id:16,type:'surv',name:'Instinto de Supervivencia',desc:'Al explotar un generador, ves el aura del asesino 6 segundos.'},
+    {id:17,type:'surv',name:'Vínculo Inquebrantable',desc:'Ves las auras de todos los supervivientes en todo momento.'},
+    {id:18,type:'surv',name:'Corazón Indomable',desc:'Mientras corres, tu jadeo de cansancio desaparece más rápido.'},
+    {id:19,type:'surv',name:'Botín de Guerra',desc:'El primer cofre siempre contiene un ítem de rareza muy alta.'},
+    {id:20,type:'surv',name:'Alerta',desc:'Al golpear el asesino un palé o romper un objeto, ves su aura 4s.'},
+    {id:21,type:'surv',name:'Escapista',desc:'Más opciones al agitarte cuando estás cargado. Probabilidad +50%.'},
+    {id:22,type:'surv',name:'Trabajo en Equipo',desc:'Al reparar con otro superviviente, ambos van un 15% más rápido.'},
+    {id:23,type:'surv',name:'Ojos de la Oscuridad',desc:'Ves auras de todos los supervivientes los primeros 30 segundos.'},
+    {id:24,type:'surv',name:'Presagio',desc:'Al inicio ves todos los generadores. Bonus de velocidad al empezar.'},
+    {id:25,type:'surv',name:'Descanso Rápido',desc:'Recuperas stamina un 25% más rápido tras una persecución.'},
+    {id:26,type:'surv',name:'Espejo Oscuro',desc:'Ves el aura del asesino al estar cargado o en un gancho.'},
+    {id:27,type:'surv',name:'Premonición',desc:'Advertencia auditiva cuando el asesino te mira directamente a 36m.'},
+    {id:28,type:'surv',name:'Guardián',desc:'Revivir a alguien de un gancho da velocidad a ambos por 10 segundos.'},
+    {id:100,type:'kill',name:'Barbarismo',desc:'Cada golpe destruye palés y ventanas en tu camino automáticamente.'},
+    {id:101,type:'kill',name:'Llamada de la Oscuridad',desc:'Ves auras de supervivientes heridos en cualquier distancia.'},
+    {id:102,type:'kill',name:'Recuerdo Amargo',desc:'Al completar un generador, todos los supervivientes gritan y revelan su aura 4s.'},
+    {id:103,type:'kill',name:'Sin Escapatoria',desc:'Al activar la última salida, ves el aura de todos los supervivientes 3s.'},
+    {id:104,type:'kill',name:'NOED',desc:'Al abrir salidas, ganas velocidad y ataque instantáneo de un golpe.'},
+    {id:105,type:'kill',name:'Fuego Interior',desc:'Cada golpe exitoso aumenta tu velocidad de movimiento 0.5 segundos.'},
+    {id:106,type:'kill',name:'Maldición: Sin Sanación',desc:'Los supervivientes pierden 50% de velocidad de sanación permanentemente.'},
+    {id:107,type:'kill',name:'Perseverancia',desc:'Romper palés no te penaliza con tiempo de recuperación adicional.'},
+    {id:108,type:'kill',name:'Destierro',desc:'Ves el aura de todos los supervivientes 5 segundos al inicio.'},
+    {id:109,type:'kill',name:'Paciencia Siniestra',desc:'Tras 90s sin atacar, tu velocidad aumenta un 6% permanentemente.'},
+    {id:110,type:'kill',name:'Monitor y Abuso',desc:'Fuera de persecución tu radio de terror se reduce 16m.'},
+    {id:111,type:'kill',name:'Agitador',desc:'Al inicio, 3 generadores aleatorios explotan automáticamente.'},
+    {id:112,type:'kill',name:'Corrupción Inevitable',desc:'Al inicio, los 3 generadores más lejanos se bloquean 120 segundos.'},
+    {id:113,type:'kill',name:'Bromas Pesadas',desc:'Los ítems de los supervivientes pierden carga un 20% más rápido.'},
+    {id:114,type:'kill',name:'Sello Maldito',desc:'Marcas un generador. Los que lo reparen quedan Malditos indefinidamente.'},
+    {id:115,type:'kill',name:'Desolación',desc:'Al golpear a un superviviente en estado normal, un generador explota.'},
+    {id:116,type:'kill',name:'Sacrificio Oscuro',desc:'Al enganchar en agonía, todos los generadores en progreso retroceden.'},
+    {id:117,type:'kill',name:'Impulso Asesino',desc:'Tras enganchar a alguien, ganas velocidad de movimiento 15 segundos.'},
+    {id:118,type:'kill',name:'Amenaza Latente',desc:'Al salir del radio de terror, ves el aura del superviviente 3 segundos.'},
+    {id:119,type:'kill',name:'Trampa Mortal',desc:'Supervivientes inconscientes en tu radio quedan heridos al levantarse.'},
+    {id:120,type:'kill',name:'Localizador',desc:'Ves el aura de supervivientes que reparan generadores a 32m de ti.'},
+    {id:121,type:'kill',name:'Ira Catártica',desc:'Cada generador completado aumenta tu velocidad de ataque 5%, x3 máx.'},
+    {id:122,type:'kill',name:'Miedo Absoluto',desc:'Supervivientes en estado Normal a 24m gritan y revelan su posición.'},
+    {id:123,type:'kill',name:'Dominación',desc:'25% de probabilidad de no perder cooldown al golpear un palé.'},
+    {id:124,type:'kill',name:'Presencia Abrumadora',desc:'Supervivientes a 8m no pueden recuperar stamina mientras estés cerca.'},
+    {id:125,type:'kill',name:'Caos Controlado',desc:'Ves auras de todos los generadores los primeros 90 segundos.'},
+    {id:126,type:'kill',name:'Castigo del Observador',desc:'Al fallar una prueba de habilidad, el superviviente queda Expuesto 60s.'},
   ],
-  killers: [
-    {id:1,name:'La Trampa',power:'Cepos de Oso',desc:'Coloca cepos de oso que atrapan a los supervivientes. El asesino clásico y más icónico del juego.'},
-    {id:2,name:'El Espectro',power:'Campana del Silencio',desc:'Puede volverse invisible usando la Campana del Silencio para acercarse sin ser detectado.'},
-    {id:3,name:'La Sierra',power:'Sierra Mecánica',desc:'Utiliza una sierra mecánica para acelerar a gran velocidad y cortar supervivientes rápidamente.'},
-    {id:4,name:'La Enfermera',power:'Blink Espiritual',desc:'Puede realizar saltos telequinéticos para aparecer frente a supervivientes a través de paredes.'},
-    {id:5,name:'La Muerte',power:'Fuerza Oscura',desc:'Puede absorber la fuerza oscura de los generadores para aumentar su velocidad de movimiento.'},
-    {id:6,name:'La Bruja',power:'Círculos de Poder',desc:'Coloca tótems de maldición que afectan a los supervivientes con efectos negativos devastadores.'},
-    {id:7,name:'El Doctor',power:'Electrochoques',desc:'Envía descargas eléctricas que provocan terror y alucinaciones en los supervivientes.'},
-    {id:8,name:'El Fantasma',power:'Capa de Invisibilidad',desc:'Puede volverse completamente invisible durante períodos cortos para acechar sin ser visto.'},
-    {id:9,name:'El Asesino de la Máscara',power:'Máscara de Terror',desc:'Su máscara causa miedo extremo. Puede detectar supervivientes por el rastro de su miedo.'},
-    {id:10,name:'La Espantapájaros',power:'Corvus',desc:'Controla a Corvus, su cuervo familiar, para acechar supervivientes a distancia sin moverse.'},
-    {id:11,name:'El Carnicero',power:'Ganchos Voladores',desc:'Lanza ganchos de cadena para atrapar y arrastrar supervivientes hacia él desde lejos.'},
-    {id:12,name:'El Espíritu',power:'Embestida Espiritual',desc:'Proyecta su espíritu hacia adelante para moverse rápido e interceptar supervivientes de forma mortal.'},
-    {id:13,name:'La Legión',power:'Frenesí',desc:'Entra en frenesí para golpear múltiples supervivientes seguidos sin tiempo de recuperación.'},
-    {id:14,name:'La Plaga',power:'Vómito Corrupto',desc:'Infecta supervivientes y el terreno con su poder de corrupción que los debilita progresivamente.'},
-    {id:15,name:'El Payaso',power:'Botellas de Grito',desc:'Lanza botellas con gas tóxico que ralentizan y afectan negativamente a los supervivientes.'},
-    {id:16,name:'El Ojo',power:'Microscopio',desc:'Puede ver a través de paredes usando su ojo sobrenatural para localizar objetivos con precisión.'},
-    {id:17,name:'La Pesadilla',power:'Reino del Sueño',desc:'Arrastra supervivientes al reino del sueño donde son más vulnerables y tienen penalizaciones severas.'},
-    {id:18,name:'El Cerdo',power:'Trampa Craneal',desc:'Coloca trampas craneales mortales en supervivientes inconscientes que detonan si no las retiran.'},
-    {id:19,name:'El Demogorgon',power:'Portal Oscuro',desc:'Abre portales para moverse por el mapa y atacar desde lugares completamente inesperados.'},
-    {id:20,name:'Oni',power:'Furia Demoníaca',desc:'Absorbe sangre de supervivientes heridos para desatar su devastadora forma demoníaca imparable.'},
-    {id:21,name:'La Deathslinger',power:'Revólver de Cadenas',desc:'Dispara un arpón que clava y arrastra supervivientes hacia ella. Gran alcance y precisión.'},
-    {id:22,name:'El Ejecutor',power:'Pirámide Afilada',desc:'Su pirámide puede registrar y castigar a los supervivientes desde cualquier lugar del mapa.'},
-    {id:23,name:'La Telaraña',power:'Telas de Araña',desc:'Crea telas de araña por el mapa que ralentizan y alertan cuando los supervivientes las cruzan.'},
-    {id:24,name:'El Artista',power:'Bandadas Creadoras',desc:'Crea bandadas de cuervos que atacan supervivientes a distancia con precisión mortal.'},
-    {id:25,name:'La Escolta',power:'Trampas Nocturnas',desc:'Coloca trampas nocturnas por el mapa que bloquean el paso a los supervivientes desprevenidos.'},
-    {id:26,name:'El Caballero',power:'Guardia Real',desc:'Invoca guardias armados que patrullan el mapa de forma autónoma y persiguen supervivientes.'},
-    {id:27,name:'El Tirador',power:'Pistola de Clavos',desc:'Dispara clavos para clavar a los supervivientes en paletas o paredes inmovilizándolos.'},
-    {id:28,name:'El Blight',power:'Rush Infectado',desc:'Corre a alta velocidad y rebota en obstáculos para atacar a los supervivientes con letal velocidad.'},
-    {id:29,name:'El Monstruo del Pantano',power:'Tentáculos',desc:'Extiende tentáculos para atacar supervivientes detrás de obstáculos y por encima de palés.'},
-    {id:30,name:'El Vecino',power:'Trampas Domésticas',desc:'Ha instalado trampas caseras peligrosas por todo el mapa para atrapar a sus víctimas.'},
+  killers:[
+    {id:1,name:'La Trampa',power:'Cepos de Oso',desc:'Coloca cepos de oso que atrapan a los supervivientes.'},
+    {id:2,name:'El Espectro',power:'Campana del Silencio',desc:'Se vuelve invisible para acercarse sin ser detectado.'},
+    {id:3,name:'La Sierra',power:'Sierra Mecánica',desc:'Acelera a gran velocidad con su sierra mecánica.'},
+    {id:4,name:'La Enfermera',power:'Blink Espiritual',desc:'Realiza saltos telequinéticos a través de paredes.'},
+    {id:5,name:'La Muerte',power:'Fuerza Oscura',desc:'Absorbe fuerza oscura de generadores para aumentar velocidad.'},
+    {id:6,name:'La Bruja',power:'Círculos de Poder',desc:'Coloca tótems de maldición con efectos negativos devastadores.'},
+    {id:7,name:'El Doctor',power:'Electrochoques',desc:'Envía descargas que causan alucinaciones en supervivientes.'},
+    {id:8,name:'El Fantasma',power:'Capa de Invisibilidad',desc:'Se vuelve completamente invisible por períodos cortos.'},
+    {id:9,name:'El Asesino de la Máscara',power:'Máscara de Terror',desc:'Su máscara causa miedo extremo. Detecta supervivientes por el miedo.'},
+    {id:10,name:'La Espantapájaros',power:'Corvus',desc:'Controla a Corvus, su cuervo, para acechar a distancia.'},
+    {id:11,name:'El Carnicero',power:'Ganchos Voladores',desc:'Lanza ganchos de cadena para atrapar supervivientes.'},
+    {id:12,name:'El Espíritu',power:'Embestida Espiritual',desc:'Proyecta su espíritu para interceptar supervivientes.'},
+    {id:13,name:'La Legión',power:'Frenesí',desc:'Entra en frenesí para golpear múltiples supervivientes seguidos.'},
+    {id:14,name:'La Plaga',power:'Vómito Corrupto',desc:'Infecta supervivientes con su poder de corrupción.'},
+    {id:15,name:'El Payaso',power:'Botellas de Grito',desc:'Lanza botellas con gas que ralentizan a los supervivientes.'},
+    {id:16,name:'El Ojo',power:'Microscopio',desc:'Ve a través de paredes con su ojo sobrenatural.'},
+    {id:17,name:'La Pesadilla',power:'Reino del Sueño',desc:'Arrastra supervivientes al reino del sueño.'},
+    {id:18,name:'El Cerdo',power:'Trampa Craneal',desc:'Coloca trampas craneales mortales en supervivientes inconscientes.'},
+    {id:19,name:'El Demogorgon',power:'Portal Oscuro',desc:'Abre portales para moverse por el mapa inesperadamente.'},
+    {id:20,name:'Oni',power:'Furia Demoníaca',desc:'Absorbe sangre para desatar su forma demoníaca imparable.'},
+    {id:21,name:'La Deathslinger',power:'Revólver de Cadenas',desc:'Dispara un arpón que arrastra supervivientes hacia ella.'},
+    {id:22,name:'El Ejecutor',power:'Pirámide Afilada',desc:'Su pirámide castiga supervivientes desde cualquier lugar.'},
+    {id:23,name:'La Telaraña',power:'Telas de Araña',desc:'Crea telas que ralentizan y alertan al cruzarlas.'},
+    {id:24,name:'El Artista',power:'Bandadas Creadoras',desc:'Crea bandadas de cuervos que atacan a distancia.'},
+    {id:25,name:'La Escolta',power:'Trampas Nocturnas',desc:'Coloca trampas nocturnas que bloquean el paso.'},
+    {id:26,name:'El Caballero',power:'Guardia Real',desc:'Invoca guardias que patrullan y persiguen supervivientes.'},
+    {id:27,name:'El Tirador',power:'Pistola de Clavos',desc:'Dispara clavos para clavar supervivientes en paredes.'},
+    {id:28,name:'El Blight',power:'Rush Infectado',desc:'Corre a alta velocidad y rebota en obstáculos para atacar.'},
+    {id:29,name:'El Monstruo del Pantano',power:'Tentáculos',desc:'Extiende tentáculos para atacar detrás de obstáculos.'},
+    {id:30,name:'El Vecino',power:'Trampas Domésticas',desc:'Instala trampas peligrosas por todo el mapa.'},
   ],
-  history: [],
-  nextPerkId: 300,
-  nextKillerId: 200,
+  history:[],
+  nextPerkId:300,
+  nextKillerId:200,
 };
-
-function loadData() {
-  try {
-    const s = localStorage.getItem('dbd_db_v2');
-    if (s) {
-      const parsed = JSON.parse(s);
-      DB = { ...DB, ...parsed };
-    }
-  } catch(e) {}
-}
-function saveData() {
-  try { localStorage.setItem('dbd_db_v2', JSON.stringify(DB)); } catch(e) {}
-}
+function loadData(){try{const s=localStorage.getItem('dbd_db_v3');if(s){const p=JSON.parse(s);DB={...DB,...p};}}catch(e){}}
+function saveData(){try{localStorage.setItem('dbd_db_v3',JSON.stringify(DB));}catch(e){}}
 loadData();
 
-// ===================== AUTH =====================
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
-  const err = document.getElementById('login-error');
-  if (u === CREDS.user && p === CREDS.pass) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    err.textContent = '';
+// =================== AUTH ===================
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value;
+  const err=document.getElementById('login-error');
+  if(u===CREDS.user&&p===CREDS.pass){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    err.textContent='';
     initApp();
   } else {
-    err.textContent = '❌ Usuario o contraseña incorrectos. Inténtalo de nuevo.';
-    document.getElementById('login-pass').value = '';
+    err.textContent='❌ Usuario o contraseña incorrectos.';
+    document.getElementById('login-pass').value='';
     document.getElementById('login-pass').focus();
   }
 }
-document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-document.getElementById('login-user').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pass').focus(); });
+document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('login-user').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('login-pass').focus()});
+function doLogout(){document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';document.getElementById('login-user').value='';document.getElementById('login-pass').value='';}
 
-function doLogout() {
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-  document.getElementById('obs-overlay').classList.remove('show');
+// =================== NAVEGACIÓN ===================
+function showPage(p,btn){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(p==='historial')renderHistory();
+  if(p==='admin'){renderPerkAdmin();renderKillerAdmin();}
 }
 
-// ===================== NAVEGACIÓN =====================
-function showPage(p, btn) {
-  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-  document.getElementById('page-' + p).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (p === 'historial') renderHistory();
-  if (p === 'admin') { renderPerkAdmin(); renderKillerAdmin(); }
+// =================== WHEEL ENGINE ===================
+const WS={};
+
+function drawWheel(type){
+  const canvas=document.getElementById(type+'-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const items=getItems(type);
+  const w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=w/2-4;
+  const n=items.length;
+  ctx.clearRect(0,0,w,h);
+  if(!n){ctx.fillStyle='#333';ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();return;}
+  const arc=Math.PI*2/n;
+  const rot=WS[type]?WS[type].angle:0;
+  items.forEach((item,i)=>{
+    const start=rot+i*arc,end=start+arc;
+    const colors=WHEEL_COLORS[i%WHEEL_COLORS.length];
+    // Segment
+    const grad=ctx.createRadialGradient(cx,cy,r*0.2,cx,cy,r);
+    grad.addColorStop(0,colors[0]);grad.addColorStop(1,colors[1]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
+    ctx.fillStyle=grad;ctx.fill();
+    // Border
+    ctx.strokeStyle='rgba(0,0,0,0.5)';ctx.lineWidth=1.5;ctx.stroke();
+    // Text
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(start+arc/2);
+    ctx.textAlign='right';ctx.fillStyle='#fff';
+    ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=4;
+    const maxW=r-40,name=item.name;
+    let fs=13;
+    ctx.font=`bold ${fs}px Rajdhani, sans-serif`;
+    while(ctx.measureText(name).width>maxW&&fs>8){fs--;ctx.font=`bold ${fs}px Rajdhani, sans-serif`;}
+    ctx.fillText(name,r-12,5);
+    ctx.restore();
+    // Segment divider sparkle
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(start);
+    ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(r*0.12,0);ctx.lineTo(r,0);ctx.stroke();
+    ctx.restore();
+  });
+  // Outer ring
+  ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(212,160,23,0.8)';ctx.lineWidth=4;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,r-4,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,0,0,0.6)';ctx.lineWidth=2;ctx.stroke();
 }
 
-// ===================== RULETAS =====================
-const ITEM_H = 44;
-
-function buildTrackItems(items) {
-  // Repeat items multiple times to fill the track
-  const repeated = [];
-  const reps = Math.max(10, Math.ceil(200 / items.length));
-  for (let i = 0; i < reps; i++) repeated.push(...items);
-  return repeated;
+function getItems(type){
+  if(type==='surv')return DB.perks.filter(p=>p.type==='surv');
+  if(type==='kill')return DB.perks.filter(p=>p.type==='kill');
+  return DB.killers;
 }
 
-function renderTrack(trackId, items) {
-  const track = document.getElementById(trackId);
-  if (!items || !items.length) {
-    track.innerHTML = '<div class="roulette-item" style="color:var(--text3);justify-content:center">Sin elementos cargados</div>';
-    return [];
-  }
-  const ext = buildTrackItems(items);
-  track.innerHTML = ext.map(item => `
-    <div class="roulette-item">
-      <div class="perk-icon-mini">${item.name.slice(0,2).toUpperCase()}</div>
-      <span>${item.name}</span>
-    </div>`).join('');
-  track.style.transform = 'translateY(0px)';
-  return ext;
+function initWheels(){
+  ['surv','kill','killer'].forEach(t=>{
+    WS[t]={angle:0,spinning:false};
+    drawWheel(t);
+  });
 }
 
-const RS = { surv:{spinning:false,ext:[],items:[]}, kill:{spinning:false,ext:[],items:[]}, killer:{spinning:false,ext:[],items:[]} };
+function spinWheel(type){
+  const s=WS[type];
+  const items=getItems(type);
+  if(s.spinning||!items.length)return;
+  s.spinning=true;
+  document.getElementById(type+'-btn').disabled=true;
+  const center=document.getElementById(type+'-center');
+  if(center){center.style.transform='translate(-50%,-50%) scale(0.9)';}
 
-function initRoulettes() {
-  const survItems = DB.perks.filter(p => p.type === 'surv');
-  const killItems = DB.perks.filter(p => p.type === 'kill');
-  const killerItems = DB.killers;
-  RS.surv.items = survItems;   RS.surv.ext = renderTrack('surv-track', survItems);
-  RS.kill.items = killItems;   RS.kill.ext = renderTrack('kill-track', killItems);
-  RS.killer.items = killerItems; RS.killer.ext = renderTrack('killer-track', killerItems);
-}
+  const winnerIdx=Math.floor(Math.random()*items.length);
+  const winner=items[winnerIdx];
+  const arc=Math.PI*2/items.length;
+  // We want the winner segment to end up at the top (where pointer is = -PI/2)
+  // Angle of winner center: winnerIdx*arc + arc/2
+  // We need: currentAngle + totalSpin + winnerAngle = 2PI*k - PI/2
+  const extraSpins=(5+Math.floor(Math.random()*4))*Math.PI*2;
+  const winnerCenter=winnerIdx*arc+arc/2;
+  const targetAngle=extraSpins+(Math.PI*2-winnerCenter-Math.PI/2-s.angle%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+  const totalRot=s.angle+targetAngle;
 
-function spinRoulette(type) {
-  const s = RS[type];
-  if (s.spinning || !s.items.length) return;
-  s.spinning = true;
-  document.getElementById(type + '-btn').disabled = true;
+  const duration=4000+Math.random()*1000;
+  const startAngle=s.angle;
+  const startTime=performance.now();
 
-  const items = s.items;
-  const winnerIdx = Math.floor(Math.random() * items.length);
-  const winner = items[winnerIdx];
+  function easeOut(t){return 1-Math.pow(1-t,4);}
 
-  // Find winner position in ext array (center region)
-  const midStart = Math.floor(s.ext.length * 0.3);
-  let targetInExt = -1;
-  for (let i = midStart; i < s.ext.length - items.length; i++) {
-    if (s.ext[i].id === winner.id) { targetInExt = i; break; }
-  }
-  if (targetInExt < 0) targetInExt = midStart + winnerIdx;
-
-  // Center the winner in the display (display height = 220, center = 110, item height = 44)
-  const displayCenter = 110;
-  const targetY = -(targetInExt * ITEM_H - displayCenter + ITEM_H / 2);
-
-  // Animate with easing
-  const duration = 3800 + Math.random() * 800;
-  const startTime = performance.now();
-  const startY = 0;
-
-  function easeOut(t) {
-    if (t < 0.6) return t * (1 / 0.6) * 0.8;
-    const p = (t - 0.6) / 0.4;
-    return 0.8 + 0.2 * (1 - Math.pow(1 - p, 4));
-  }
-
-  const track = document.getElementById(type + '-track');
-  track.style.transform = 'translateY(0px)';
-
-  function animate(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const y = easeOut(t) * targetY;
-    track.style.transform = `translateY(${y}px)`;
-    if (t < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      track.style.transform = `translateY(${targetY}px)`;
-      s.spinning = false;
-      document.getElementById(type + '-btn').disabled = false;
-      onSpinDone(type, winner);
+  function animate(now){
+    const t=Math.min((now-startTime)/duration,1);
+    const e=easeOut(t);
+    s.angle=startAngle+targetAngle*e;
+    drawWheel(type);
+    if(t<1){requestAnimationFrame(animate);}
+    else{
+      s.angle=totalRot;
+      s.spinning=false;
+      document.getElementById(type+'-btn').disabled=false;
+      if(center){center.style.transform='translate(-50%,-50%) scale(1)';}
+      onWinnerSelected(type,winner);
     }
   }
   requestAnimationFrame(animate);
 }
 
-function onSpinDone(type, winner) {
-  if (type === 'surv') {
-    document.getElementById('surv-result-name').textContent = winner.name;
-    document.getElementById('surv-result-desc').textContent = winner.desc || '';
-  } else if (type === 'kill') {
-    document.getElementById('kill-result-name').textContent = winner.name;
-    document.getElementById('kill-result-desc').textContent = winner.desc || '';
-  } else {
-    document.getElementById('killer-result-name').textContent = winner.name;
-    document.getElementById('killer-result-desc').textContent = winner.power || winner.desc || '';
-  }
-  showWinner(winner, type);
-  addHistory(type, winner, []);
-  updateOBS(type, winner, []);
+function onWinnerSelected(type,winner){
+  if(type==='surv'){document.getElementById('surv-result-name').textContent=winner.name;document.getElementById('surv-result-desc').textContent=winner.desc||'';}
+  else if(type==='kill'){document.getElementById('kill-result-name').textContent=winner.name;document.getElementById('kill-result-desc').textContent=winner.desc||'';}
+  else{document.getElementById('killer-result-name').textContent=winner.name;document.getElementById('killer-result-desc').textContent=winner.power||winner.desc||'';}
+  const icons={surv:'🔵',kill:'🔴',killer:'💀'};
+  showWinner(winner,type,icons[type]||'🎰');
+  addHistory(type,winner,[]);
+  updateOBS(type,winner,[]);
 }
 
-// ===================== WINNER MODAL =====================
-function showWinner(winner, type) {
-  const labels = { surv:'🔵 Perk de Superviviente', kill:'🔴 Perk de Asesino', killer:'💀 Asesino Seleccionado' };
-  document.getElementById('winner-name').textContent = winner.name;
-  document.getElementById('winner-sub').textContent = (winner.desc || winner.power || labels[type] || '').slice(0, 120);
+// =================== WINNER MODAL ===================
+function showWinner(winner,type,icon){
+  const labels={surv:'Perk de Superviviente',kill:'Perk de Asesino',killer:'Asesino Seleccionado'};
+  document.getElementById('winner-icon').textContent=icon||'🎰';
+  document.getElementById('winner-name').textContent=winner.name;
+  document.getElementById('winner-sub').textContent=(winner.desc||winner.power||'').slice(0,120);
   createSparks();
   document.getElementById('winner-overlay').classList.add('show');
-  setTimeout(() => closeWinner(), 4000);
+  setTimeout(()=>closeWinner(),4500);
 }
-function closeWinner() {
-  document.getElementById('winner-overlay').classList.remove('show');
-}
-function createSparks() {
-  const c = document.getElementById('sparks');
-  c.innerHTML = '';
-  for (let i = 0; i < 24; i++) {
-    const s = document.createElement('div');
-    s.className = 'spark';
-    const angle = Math.random() * Math.PI * 2;
-    const dist = 60 + Math.random() * 180;
-    s.style.cssText = `left:50%;top:50%;--tx:${Math.cos(angle)*dist}px;--ty:${Math.sin(angle)*dist}px;animation-delay:${Math.random()*0.4}s;width:${2+Math.random()*4}px;height:${2+Math.random()*4}px`;
+function closeWinner(){document.getElementById('winner-overlay').classList.remove('show');}
+function createSparks(){
+  const c=document.getElementById('sparks');c.innerHTML='';
+  const cols=['#f0c040','#c0392b','#e74c3c','#d4a017','#fff'];
+  for(let i=0;i<28;i++){
+    const s=document.createElement('div');s.className='spark';
+    const angle=Math.random()*Math.PI*2,dist=70+Math.random()*200;
+    const size=2+Math.random()*5;
+    s.style.cssText=`left:50%;top:50%;width:${size}px;height:${size}px;background:${cols[Math.floor(Math.random()*cols.length)]};--tx:${Math.cos(angle)*dist}px;--ty:${Math.sin(angle)*dist}px;animation-delay:${Math.random()*0.5}s;animation-duration:${0.8+Math.random()*0.6}s`;
     c.appendChild(s);
   }
 }
 
-// ===================== BUILD GENERATOR =====================
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+// =================== BUILD ===================
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function generateBuild(type) {
-  const res = document.getElementById('build-result');
-  const perksEl = document.getElementById('build-perks');
-  const killerSec = document.getElementById('build-killer-section');
-  const title = document.getElementById('build-result-title');
-
+function generateBuild(type){
+  const res=document.getElementById('build-result');
+  const perksEl=document.getElementById('build-perks');
+  const killerSec=document.getElementById('build-killer-section');
+  const title=document.getElementById('build-result-title');
   res.classList.remove('show');
-  setTimeout(() => {
-    if (type === 'surv') {
-      const pool = DB.perks.filter(p => p.type === 'surv');
-      if (pool.length < 1) { alert('No hay perks de superviviente disponibles.'); return; }
-      title.textContent = '⚡ BUILD DE SUPERVIVIENTE';
-      killerSec.innerHTML = '';
-      const perks = shuffle(pool).slice(0, 4);
-      renderBuildPerks(perksEl, perks, 'surv');
-      addHistory('build-surv', {name:'Build Superviviente'}, perks);
-      updateOBS('build-surv', {name:'Build Superviviente'}, perks);
+  setTimeout(()=>{
+    if(type==='surv'){
+      const pool=DB.perks.filter(p=>p.type==='surv');
+      if(!pool.length){alert('No hay perks de superviviente.');return;}
+      title.textContent='⚡ BUILD DE SUPERVIVIENTE';killerSec.innerHTML='';
+      const perks=shuffle(pool).slice(0,4);
+      renderBuildPerks(perksEl,perks,'surv');
+      addHistory('build-surv',{name:'Build Superviviente'},perks);
+      updateOBS('build-surv',{name:'Build Superviviente'},perks);
     } else {
-      const killPool = DB.perks.filter(p => p.type === 'kill');
-      const killerPool = DB.killers;
-      if (!killerPool.length) { alert('No hay asesinos disponibles.'); return; }
-      const killer = killerPool[Math.floor(Math.random() * killerPool.length)];
-      title.textContent = '🩸 BUILD DE ASESINO';
-      killerSec.innerHTML = `
-        <div class="build-killer-banner">
-          <div class="killer-badge">${killer.name.slice(0,2).toUpperCase()}</div>
-          <div>
-            <div class="killer-name-big">${killer.name}</div>
-            <div class="killer-power">⚡ ${killer.power || ''}</div>
-          </div>
-        </div>`;
-      const perks = shuffle(killPool).slice(0, 4);
-      renderBuildPerks(perksEl, perks, 'kill');
-      addHistory('build-killer', {name:'Build Asesino — '+killer.name}, perks);
-      updateOBS('build-killer', killer, perks);
+      const kp=DB.killers,pp=DB.perks.filter(p=>p.type==='kill');
+      if(!kp.length){alert('No hay asesinos.');return;}
+      const killer=kp[Math.floor(Math.random()*kp.length)];
+      title.textContent='🩸 BUILD DE ASESINO';
+      killerSec.innerHTML=`<div class="build-killer-banner"><div class="killer-badge">${killer.name.slice(0,2).toUpperCase()}</div><div><div class="killer-name-big">${killer.name}</div><div class="killer-power">⚡ ${killer.power||''}</div></div></div>`;
+      const perks=shuffle(pp).slice(0,4);
+      renderBuildPerks(perksEl,perks,'kill');
+      addHistory('build-killer',{name:'Build Asesino — '+killer.name},perks);
+      updateOBS('build-killer',killer,perks);
     }
     res.classList.add('show');
-  }, 50);
+  },50);
+}
+function renderBuildPerks(el,perks,type){
+  el.innerHTML=perks.map(p=>`<div class="perk-card"><div class="perk-card-icon">${p.name.slice(0,2).toUpperCase()}</div><div class="perk-card-type">${type==='surv'?'Superviviente':'Asesino'}</div><div class="perk-card-name">${p.name}</div><div class="perk-card-desc">${p.desc||''}</div></div>`).join('');
 }
 
-function renderBuildPerks(el, perks, type) {
-  el.innerHTML = perks.map(p => `
-    <div class="perk-card">
-      <div class="perk-card-icon">${p.name.slice(0,2).toUpperCase()}</div>
-      <div class="perk-card-type">${type==='surv'?'Superviviente':'Asesino'}</div>
-      <div class="perk-card-name">${p.name}</div>
-      <div class="perk-card-desc">${p.desc || ''}</div>
-    </div>`).join('');
-}
-
-// ===================== HISTORIAL =====================
-function addHistory(type, winner, perks) {
-  const now = new Date();
-  const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-  DB.history.unshift({ type, winner: winner.name, perks: perks.map(p=>p.name), time });
-  if (DB.history.length > 100) DB.history.pop();
+// =================== HISTORY ===================
+function addHistory(type,winner,perks){
+  const now=new Date();
+  const time=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  DB.history.unshift({type,winner:winner.name,perks:perks.map(p=>p.name),time});
+  if(DB.history.length>100)DB.history.pop();
   saveData();
 }
-
-function renderHistory() {
-  const body = document.getElementById('history-body');
-  if (!DB.history.length) {
-    body.innerHTML = '<tr><td colspan="5" class="history-empty">No hay tiradas registradas aún. ¡Gira una ruleta!</td></tr>';
-    return;
-  }
-  const badges = { surv:'badge-surv', kill:'badge-kill', killer:'badge-kill', 'build-surv':'badge-build', 'build-killer':'badge-build' };
-  const labels = { surv:'Perk Surv', kill:'Perk Killer', killer:'Asesino', 'build-surv':'Build Surv', 'build-killer':'Build Killer' };
-  body.innerHTML = DB.history.map((h, i) => `
-    <tr>
-      <td style="color:var(--text3)">${DB.history.length - i}</td>
-      <td><span class="badge-type ${badges[h.type]||'badge-surv'}">${labels[h.type]||h.type}</span></td>
-      <td style="color:var(--text)">${h.winner}</td>
-      <td style="color:var(--text3);font-size:0.8rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h.perks&&h.perks.length?h.perks.join(', '):'-'}</td>
-      <td style="color:var(--text3);white-space:nowrap">${h.time}</td>
-    </tr>`).join('');
+function renderHistory(){
+  const body=document.getElementById('history-body');
+  if(!DB.history.length){body.innerHTML='<tr><td colspan="5" class="history-empty">No hay tiradas aún. ¡Gira una ruleta!</td></tr>';return;}
+  const badges={surv:'badge-surv',kill:'badge-kill',killer:'badge-kill','build-surv':'badge-build','build-killer':'badge-build'};
+  const labels={surv:'Perk Surv',kill:'Perk Killer',killer:'Asesino','build-surv':'Build Surv','build-killer':'Build Killer'};
+  body.innerHTML=DB.history.map((h,i)=>`<tr><td style="color:var(--text3)">${DB.history.length-i}</td><td><span class="badge-type ${badges[h.type]||'badge-surv'}">${labels[h.type]||h.type}</span></td><td style="color:var(--text)">${h.winner}</td><td style="color:var(--text3);font-size:0.78rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h.perks&&h.perks.length?h.perks.join(', '):'-'}</td><td style="color:var(--text3);white-space:nowrap">${h.time}</td></tr>`).join('');
 }
+function clearHistory(){if(confirm('¿Limpiar el historial?')){DB.history=[];saveData();renderHistory();}}
 
-function clearHistory() {
-  if (confirm('¿Estás seguro de que quieres limpiar todo el historial?')) {
-    DB.history = [];
-    saveData();
-    renderHistory();
-  }
+// =================== OBS ===================
+let obsVisible=false;
+function toggleOBS(){obsVisible=!obsVisible;document.getElementById('obs-overlay').classList.toggle('show',obsVisible);}
+function updateOBS(type,winner,perks){
+  const labels={surv:'Perk de Superviviente',kill:'Perk de Asesino',killer:'Asesino','build-surv':'Build Superviviente','build-killer':'Build Asesino'};
+  document.getElementById('obs-label').textContent=labels[type]||'Resultado';
+  document.getElementById('obs-result').textContent=winner.name;
+  document.getElementById('obs-sub').textContent=winner.power||(winner.desc?(winner.desc.slice(0,60)+'…'):'');
+  const pe=document.getElementById('obs-perks');
+  pe.innerHTML=perks&&perks.length?perks.map(p=>`<span class="obs-perk-tag">${p.name}</span>`).join(''):'';
 }
 
-// ===================== OBS OVERLAY =====================
-let obsVisible = false;
-function toggleOBS() {
-  obsVisible = !obsVisible;
-  document.getElementById('obs-overlay').classList.toggle('show', obsVisible);
+// =================== ADMIN PERKS ===================
+function savePerk(){
+  const id=document.getElementById('edit-perk-id').value;
+  const name=document.getElementById('new-perk-name').value.trim();
+  const type=document.getElementById('new-perk-type').value;
+  const desc=document.getElementById('new-perk-desc').value.trim();
+  const msg=document.getElementById('perk-msg');
+  if(!name){msg.textContent='Nombre requerido.';msg.className='admin-msg err';return;}
+  if(id){const idx=DB.perks.findIndex(p=>p.id==id);if(idx>=0)DB.perks[idx]={...DB.perks[idx],name,type,desc};msg.textContent='✓ Perk actualizada.';}
+  else{DB.perks.push({id:DB.nextPerkId++,type,name,desc});msg.textContent='✓ Perk agregada.';}
+  msg.className='admin-msg ok';saveData();cancelEditPerk();renderPerkAdmin();initWheels();setTimeout(()=>msg.textContent='',3000);
 }
-function updateOBS(type, winner, perks) {
-  const labels = { surv:'Perk de Superviviente', kill:'Perk de Asesino', killer:'Asesino', 'build-surv':'Build Superviviente', 'build-killer':'Build Asesino' };
-  document.getElementById('obs-label').textContent = labels[type] || 'Resultado';
-  document.getElementById('obs-result').textContent = winner.name;
-  document.getElementById('obs-sub').textContent = winner.power || (winner.desc ? winner.desc.slice(0,60)+'…' : '');
-  const perksEl = document.getElementById('obs-perks');
-  perksEl.innerHTML = perks && perks.length ? perks.map(p=>`<span class="obs-perk-tag">${p.name}</span>`).join('') : '';
-}
-
-// ===================== ADMIN — PERKS =====================
-function savePerk() {
-  const id = document.getElementById('edit-perk-id').value;
-  const name = document.getElementById('new-perk-name').value.trim();
-  const type = document.getElementById('new-perk-type').value;
-  const desc = document.getElementById('new-perk-desc').value.trim();
-  const msg = document.getElementById('perk-msg');
-  if (!name) { msg.textContent = 'El nombre es requerido.'; msg.className = 'admin-msg err'; return; }
-  if (id) {
-    const idx = DB.perks.findIndex(p => p.id == id);
-    if (idx >= 0) DB.perks[idx] = { ...DB.perks[idx], name, type, desc };
-    msg.textContent = '✓ Perk actualizada correctamente.';
-  } else {
-    DB.perks.push({ id: DB.nextPerkId++, type, name, desc });
-    msg.textContent = '✓ Perk agregada correctamente.';
-  }
-  msg.className = 'admin-msg ok';
-  saveData(); cancelEditPerk(); renderPerkAdmin(); initRoulettes();
-  setTimeout(() => msg.textContent = '', 3000);
-}
-function editPerk(id) {
-  const p = DB.perks.find(p => p.id == id);
-  if (!p) return;
-  document.getElementById('edit-perk-id').value = p.id;
-  document.getElementById('new-perk-name').value = p.name;
-  document.getElementById('new-perk-type').value = p.type;
-  document.getElementById('new-perk-desc').value = p.desc || '';
-  document.getElementById('cancel-perk-btn').style.display = 'inline-block';
-  document.getElementById('new-perk-name').focus();
-  window.scrollTo(0, 0);
-}
-function cancelEditPerk() {
-  document.getElementById('edit-perk-id').value = '';
-  document.getElementById('new-perk-name').value = '';
-  document.getElementById('new-perk-desc').value = '';
-  document.getElementById('cancel-perk-btn').style.display = 'none';
-}
-function deletePerk(id) {
-  if (!confirm('¿Eliminar esta perk?')) return;
-  DB.perks = DB.perks.filter(p => p.id != id);
-  saveData(); renderPerkAdmin(); initRoulettes();
-}
-function renderPerkAdmin() {
-  const filter = document.getElementById('filter-perk-type').value;
-  const list = document.getElementById('perk-admin-list');
-  const items = DB.perks.filter(p => filter === 'all' || p.type === filter);
-  document.getElementById('perk-count').textContent = `(${DB.perks.length} total)`;
-  if (!items.length) { list.innerHTML = '<div style="padding:1rem;color:var(--text3);font-size:0.85rem">Sin perks con este filtro.</div>'; return; }
-  list.innerHTML = items.map(p => `
-    <div class="admin-item">
-      <span class="admin-item-type">${p.type==='surv'?'Surv':'Kill'}</span>
-      <span class="admin-item-name" title="${p.name}">${p.name}</span>
-      <div class="admin-item-actions">
-        <button class="btn-edit-item" onclick="editPerk(${p.id})" title="Editar">✏</button>
-        <button class="btn-del" onclick="deletePerk(${p.id})" title="Eliminar">✕</button>
-      </div>
-    </div>`).join('');
+function editPerk(id){const p=DB.perks.find(p=>p.id==id);if(!p)return;document.getElementById('edit-perk-id').value=p.id;document.getElementById('new-perk-name').value=p.name;document.getElementById('new-perk-type').value=p.type;document.getElementById('new-perk-desc').value=p.desc||'';document.getElementById('cancel-perk-btn').style.display='inline-block';document.getElementById('new-perk-name').focus();}
+function cancelEditPerk(){document.getElementById('edit-perk-id').value='';document.getElementById('new-perk-name').value='';document.getElementById('new-perk-desc').value='';document.getElementById('cancel-perk-btn').style.display='none';}
+function deletePerk(id){if(!confirm('¿Eliminar esta perk?'))return;DB.perks=DB.perks.filter(p=>p.id!=id);saveData();renderPerkAdmin();initWheels();}
+function renderPerkAdmin(){
+  const filter=document.getElementById('filter-perk-type').value;
+  const list=document.getElementById('perk-admin-list');
+  const items=DB.perks.filter(p=>filter==='all'||p.type===filter);
+  document.getElementById('perk-count').textContent=`(${DB.perks.length} total)`;
+  if(!items.length){list.innerHTML='<div style="padding:0.8rem;color:var(--text3);font-size:0.82rem">Sin perks.</div>';return;}
+  list.innerHTML=items.map(p=>`<div class="admin-item"><span class="admin-item-type">${p.type==='surv'?'Surv':'Kill'}</span><span class="admin-item-name" title="${p.name}">${p.name}</span><div class="admin-item-actions"><button class="btn-edit-item" onclick="editPerk(${p.id})">✏</button><button class="btn-del" onclick="deletePerk(${p.id})">✕</button></div></div>`).join('');
 }
 
-// ===================== ADMIN — KILLERS =====================
-function saveKiller() {
-  const id = document.getElementById('edit-killer-id').value;
-  const name = document.getElementById('new-killer-name').value.trim();
-  const power = document.getElementById('new-killer-power').value.trim();
-  const desc = document.getElementById('new-killer-desc').value.trim();
-  const msg = document.getElementById('killer-msg');
-  if (!name) { msg.textContent = 'El nombre es requerido.'; msg.className = 'admin-msg err'; return; }
-  if (id) {
-    const idx = DB.killers.findIndex(k => k.id == id);
-    if (idx >= 0) DB.killers[idx] = { ...DB.killers[idx], name, power, desc };
-    msg.textContent = '✓ Asesino actualizado correctamente.';
-  } else {
-    DB.killers.push({ id: DB.nextKillerId++, name, power, desc });
-    msg.textContent = '✓ Asesino agregado correctamente.';
-  }
-  msg.className = 'admin-msg ok';
-  saveData(); cancelEditKiller(); renderKillerAdmin(); initRoulettes();
-  setTimeout(() => msg.textContent = '', 3000);
+// =================== ADMIN KILLERS ===================
+function saveKiller(){
+  const id=document.getElementById('edit-killer-id').value;
+  const name=document.getElementById('new-killer-name').value.trim();
+  const power=document.getElementById('new-killer-power').value.trim();
+  const desc=document.getElementById('new-killer-desc').value.trim();
+  const msg=document.getElementById('killer-msg');
+  if(!name){msg.textContent='Nombre requerido.';msg.className='admin-msg err';return;}
+  if(id){const idx=DB.killers.findIndex(k=>k.id==id);if(idx>=0)DB.killers[idx]={...DB.killers[idx],name,power,desc};msg.textContent='✓ Asesino actualizado.';}
+  else{DB.killers.push({id:DB.nextKillerId++,name,power,desc});msg.textContent='✓ Asesino agregado.';}
+  msg.className='admin-msg ok';saveData();cancelEditKiller();renderKillerAdmin();initWheels();setTimeout(()=>msg.textContent='',3000);
 }
-function editKiller(id) {
-  const k = DB.killers.find(k => k.id == id);
-  if (!k) return;
-  document.getElementById('edit-killer-id').value = k.id;
-  document.getElementById('new-killer-name').value = k.name;
-  document.getElementById('new-killer-power').value = k.power || '';
-  document.getElementById('new-killer-desc').value = k.desc || '';
-  document.getElementById('cancel-killer-btn').style.display = 'inline-block';
-  document.getElementById('new-killer-name').focus();
-  window.scrollTo(0, 0);
-}
-function cancelEditKiller() {
-  document.getElementById('edit-killer-id').value = '';
-  document.getElementById('new-killer-name').value = '';
-  document.getElementById('new-killer-power').value = '';
-  document.getElementById('new-killer-desc').value = '';
-  document.getElementById('cancel-killer-btn').style.display = 'none';
-}
-function deleteKiller(id) {
-  if (!confirm('¿Eliminar este asesino?')) return;
-  DB.killers = DB.killers.filter(k => k.id != id);
-  saveData(); renderKillerAdmin(); initRoulettes();
-}
-function renderKillerAdmin() {
-  const list = document.getElementById('killer-admin-list');
-  document.getElementById('killer-count').textContent = `(${DB.killers.length} total)`;
-  if (!DB.killers.length) { list.innerHTML = '<div style="padding:1rem;color:var(--text3)">Sin asesinos.</div>'; return; }
-  list.innerHTML = DB.killers.map(k => `
-    <div class="admin-item">
-      <span class="admin-item-name" title="${k.name}">${k.name}</span>
-      <span class="admin-item-type">${k.power || ''}</span>
-      <div class="admin-item-actions">
-        <button class="btn-edit-item" onclick="editKiller(${k.id})" title="Editar">✏</button>
-        <button class="btn-del" onclick="deleteKiller(${k.id})" title="Eliminar">✕</button>
-      </div>
-    </div>`).join('');
+function editKiller(id){const k=DB.killers.find(k=>k.id==id);if(!k)return;document.getElementById('edit-killer-id').value=k.id;document.getElementById('new-killer-name').value=k.name;document.getElementById('new-killer-power').value=k.power||'';document.getElementById('new-killer-desc').value=k.desc||'';document.getElementById('cancel-killer-btn').style.display='inline-block';document.getElementById('new-killer-name').focus();}
+function cancelEditKiller(){document.getElementById('edit-killer-id').value='';document.getElementById('new-killer-name').value='';document.getElementById('new-killer-power').value='';document.getElementById('new-killer-desc').value='';document.getElementById('cancel-killer-btn').style.display='none';}
+function deleteKiller(id){if(!confirm('¿Eliminar este asesino?'))return;DB.killers=DB.killers.filter(k=>k.id!=id);saveData();renderKillerAdmin();initWheels();}
+function renderKillerAdmin(){
+  const list=document.getElementById('killer-admin-list');
+  document.getElementById('killer-count').textContent=`(${DB.killers.length} total)`;
+  if(!DB.killers.length){list.innerHTML='<div style="padding:0.8rem;color:var(--text3)">Sin asesinos.</div>';return;}
+  list.innerHTML=DB.killers.map(k=>`<div class="admin-item"><span class="admin-item-name" title="${k.name}">${k.name}</span><span class="admin-item-type">${k.power||''}</span><div class="admin-item-actions"><button class="btn-edit-item" onclick="editKiller(${k.id})">✏</button><button class="btn-del" onclick="deleteKiller(${k.id})">✕</button></div></div>`).join('');
 }
 
-// ===================== INIT =====================
-function initApp() {
-  initRoulettes();
-}
+// =================== INIT ===================
+function initApp(){initWheels();}
 </script>
 </body>
 </html>
