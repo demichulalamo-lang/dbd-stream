@@ -7,296 +7,313 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:transparent;overflow:hidden}
-:root{
-  --gold:#d4a017;--gold2:#f0c040;
-  --red:#c0392b;--red2:#e74c3c;
-  --text:#e8e0d0;--text2:#a0958a;--text3:#6b6055;
-}
+html,body{width:100%;height:100%;overflow:hidden;background:transparent}
+:root{--gold:#d4a017;--gold2:#f0c040;--red:#c0392b;--red2:#e74c3c;--text:#e8e0d0;--text2:#a0958a;--text3:#6b6055}
 
-/* ---- WAITING SCREEN ---- */
-#waiting{
+/* SELECTOR DE RULETA */
+#selector{
   position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:transparent;flex-direction:column;gap:1rem;
+  background:rgba(10,10,15,0.97);z-index:100;flex-direction:column;gap:1.5rem;
 }
-.waiting-box{
-  background:rgba(10,10,15,0.85);border:1px solid rgba(212,160,23,0.3);
-  padding:1.5rem 2rem;text-align:center;
-  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
-  backdrop-filter:blur(8px);
+.sel-title{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold2);letter-spacing:0.2em;text-align:center}
+.sel-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.sel-btn{
+  background:rgba(192,57,43,0.15);border:2px solid var(--red);color:var(--text);
+  padding:1.2rem 1.8rem;font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.1em;
+  cursor:pointer;text-transform:uppercase;transition:all 0.25s;text-align:center;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);
+  min-width:160px;
 }
-.waiting-icon{font-size:2.5rem;margin-bottom:0.5rem;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
-.waiting-text{font-family:'Cinzel',serif;font-size:0.85rem;color:var(--gold2);letter-spacing:0.2em;text-transform:uppercase}
-.waiting-sub{color:var(--text3);font-size:0.75rem;margin-top:0.3rem;letter-spacing:0.1em}
+.sel-btn:hover{background:var(--red);box-shadow:0 0 20px rgba(192,57,43,0.4)}
+.sel-btn .si{font-size:2rem;display:block;margin-bottom:0.5rem}
 
-/* ---- WHEEL CONTAINER ---- */
-#wheel-container{
+/* RULETA */
+#wheel-view{
   position:fixed;inset:0;display:none;
   align-items:center;justify-content:center;
-  background:transparent;flex-direction:column;gap:1.5rem;
+  background:transparent;flex-direction:column;gap:1.2rem;
 }
-#wheel-container.show{display:flex}
+#wheel-view.show{display:flex}
 
+/* Botón cambiar ruleta */
+.change-btn{
+  position:fixed;top:1rem;left:1rem;
+  background:rgba(10,10,15,0.85);border:1px solid rgba(212,160,23,0.4);
+  color:var(--gold);padding:0.4rem 0.9rem;font-family:'Cinzel',serif;font-size:0.7rem;
+  letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;z-index:50;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,0 100%);
+  transition:all 0.2s;
+}
+.change-btn:hover{background:rgba(212,160,23,0.15);border-color:var(--gold2)}
+
+.type-label{
+  font-family:'Cinzel',serif;font-size:0.82rem;letter-spacing:0.25em;
+  color:var(--gold);text-transform:uppercase;text-shadow:0 0 12px rgba(212,160,23,0.5);
+}
 .wheel-outer{position:relative;display:inline-block}
-canvas#main-canvas{
+canvas#wc{
   display:block;border-radius:50%;
-  filter:drop-shadow(0 0 30px rgba(192,57,43,0.6)) drop-shadow(0 0 60px rgba(192,57,43,0.25));
+  filter:drop-shadow(0 0 25px rgba(192,57,43,0.55)) drop-shadow(0 0 50px rgba(192,57,43,0.2));
 }
 .pointer{
-  position:absolute;left:50%;top:-20px;transform:translateX(-50%);
-  width:0;height:0;
-  border-left:16px solid transparent;
-  border-right:16px solid transparent;
-  border-top:32px solid var(--gold2);
-  filter:drop-shadow(0 0 8px var(--gold));
-  z-index:10;
+  position:absolute;left:50%;top:-18px;transform:translateX(-50%);
+  width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;
+  border-top:30px solid var(--gold2);filter:drop-shadow(0 0 6px var(--gold));z-index:10;
 }
 .center-btn{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:100px;height:100px;
-  background:rgba(10,10,15,0.95);border:3px solid var(--gold);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  z-index:10;cursor:pointer;transition:all 0.2s;
+  width:96px;height:96px;background:rgba(10,10,15,0.97);border:3px solid var(--gold);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;z-index:10;cursor:pointer;transition:all 0.2s;
 }
-.center-btn:hover{border-color:var(--gold2);box-shadow:0 0 20px rgba(212,160,23,0.5);background:rgba(15,15,24,0.98)}
+.center-btn:hover:not(.spinning){border-color:var(--gold2);box-shadow:0 0 18px rgba(212,160,23,0.5)}
 .center-btn.spinning{cursor:not-allowed;opacity:0.7}
-.center-icon{font-size:2rem;line-height:1;pointer-events:none}
-.center-label{font-family:'Cinzel',serif;font-size:0.5rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-top:3px;pointer-events:none}
+.ci{font-size:1.9rem;line-height:1;pointer-events:none}
+.cl{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.1em;color:var(--gold);text-transform:uppercase;margin-top:3px;pointer-events:none}
 
-/* ---- RESULT BOX ---- */
 .result-box{
-  background:rgba(10,10,15,0.92);border:2px solid var(--gold);
-  border-top:3px solid var(--red);
-  padding:1rem 2.5rem;text-align:center;
-  min-width:420px;max-width:80vw;
-  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);
-  backdrop-filter:blur(12px);
-  position:relative;overflow:hidden;
+  background:rgba(10,10,15,0.93);border:2px solid var(--gold);border-top:3px solid var(--red);
+  padding:0.9rem 2rem;text-align:center;min-width:380px;max-width:85vw;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%);
+  backdrop-filter:blur(12px);position:relative;
 }
-.result-box::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(to right,transparent,var(--gold2),transparent);
-}
-.result-type{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text3);margin-bottom:0.3rem}
-.result-name{font-family:'Cinzel',serif;font-size:1.7rem;color:var(--gold2);line-height:1.15;text-shadow:0 0 20px rgba(240,192,64,0.3)}
-.result-desc{color:var(--text2);font-size:0.82rem;margin-top:0.3rem;line-height:1.3}
+.result-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold2),transparent)}
+.rt{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-bottom:0.2rem}
+.rn{font-family:'Cinzel',serif;font-size:1.55rem;color:var(--gold2);line-height:1.15;text-shadow:0 0 15px rgba(240,192,64,0.25)}
+.rd{color:var(--text2);font-size:0.78rem;margin-top:0.2rem;line-height:1.3}
 
-/* ---- WINNER FLASH ---- */
-.winner-flash{
-  position:fixed;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 50%,rgba(212,160,23,0.15) 0%,transparent 70%);
-  opacity:0;transition:opacity 0.3s;
+.spin-btn{
+  background:linear-gradient(135deg,var(--red),#7a1515);color:#fff;border:none;
+  padding:0.85rem 3rem;font-family:'Cinzel',serif;font-size:1rem;letter-spacing:0.2em;
+  cursor:pointer;text-transform:uppercase;transition:all 0.25s;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%);
 }
-.winner-flash.show{opacity:1}
+.spin-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(192,57,43,0.5)}
+.spin-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none}
 
-/* ---- SPARKS ---- */
-.sparks-container{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+/* SPARKS & FLASH */
+#sparks{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:200}
 .spark{position:absolute;border-radius:50%;animation:spark 1.2s ease-out forwards}
 @keyframes spark{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}
+#flash{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(212,160,23,0.18) 0%,transparent 70%);opacity:0;transition:opacity 0.3s;z-index:150}
+#flash.show{opacity:1}
 
-/* ---- TYPE LABEL ---- */
-.type-label{
-  font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.25em;
-  color:var(--gold);text-transform:uppercase;
-  text-shadow:0 0 12px rgba(212,160,23,0.5);
-  margin-bottom:0.25rem;
-}
-
-/* ---- RESPONSIVE ---- */
 @media(max-width:600px){
-  .result-box{min-width:280px;padding:0.8rem 1.5rem}
-  .result-name{font-size:1.2rem}
+  canvas#wc{width:320px!important;height:320px!important}
+  .result-box{min-width:260px;padding:0.75rem 1rem}
+  .rn{font-size:1.1rem}
 }
 </style>
 </head>
 <body>
+<div id="sparks"></div>
+<div id="flash"></div>
 
-<div class="sparks-container" id="sparks"></div>
-<div class="winner-flash" id="winner-flash"></div>
-
-<!-- WAITING -->
-<div id="waiting">
-  <div class="waiting-box">
-    <div class="waiting-icon">⚙️</div>
-    <div class="waiting-text">Vista OBS Lista</div>
-    <div class="waiting-sub">Selecciona una ruleta desde el panel principal</div>
+<!-- SELECTOR -->
+<div id="selector">
+  <div class="sel-title">¿Qué ruleta quieres girar?</div>
+  <div class="sel-btns">
+    <button class="sel-btn" onclick="loadType('surv')"><span class="si">🔵</span>Perks Superviviente</button>
+    <button class="sel-btn" onclick="loadType('kill')"><span class="si">🔴</span>Perks Asesino</button>
+    <button class="sel-btn" onclick="loadType('killer')"><span class="si">💀</span>Asesinos</button>
   </div>
 </div>
 
-<!-- WHEEL -->
-<div id="wheel-container">
-  <div class="type-label" id="type-label"></div>
+<!-- RULETA -->
+<div id="wheel-view">
+  <button class="change-btn" onclick="changeWheel()">↩ Cambiar ruleta</button>
+  <div class="type-label" id="tlabel"></div>
   <div class="wheel-outer">
     <div class="pointer"></div>
-    <canvas id="main-canvas" width="480" height="480"></canvas>
-    <div class="center-btn" id="center-btn" onclick="spinWheel()">
-      <div class="center-icon" id="center-icon">🎰</div>
-      <div class="center-label">GIRAR</div>
+    <canvas id="wc" width="460" height="460"></canvas>
+    <div class="center-btn" id="cbtn" onclick="spin()">
+      <div class="ci" id="cicon">🎰</div>
+      <div class="cl">GIRAR</div>
     </div>
   </div>
   <div class="result-box">
-    <div class="result-type" id="result-type">Selección</div>
-    <div class="result-name" id="result-name">—</div>
-    <div class="result-desc" id="result-desc">Haz clic en el centro o en el panel para girar</div>
+    <div class="rt" id="rtype">Selección</div>
+    <div class="rn" id="rname">—</div>
+    <div class="rd" id="rdesc">Haz clic en el centro o en el botón</div>
   </div>
+  <button class="spin-btn" id="spinbtn" onclick="spin()">🎰 GIRAR RULETA</button>
 </div>
 
 <script>
-const WHEEL_COLORS=[
+const COLORS=[
   ['#8B1A1A','#C0392B'],['#1A3A8B','#2980B9'],['#1A8B3A','#27AE60'],
   ['#7B1A8B','#9B59B6'],['#8B5A1A','#D4A017'],['#1A7B8B','#1ABC9C'],
   ['#8B3A1A','#E67E22'],['#3A1A8B','#8E44AD'],['#1A8B5A','#2ECC71'],
   ['#8B1A5A','#E91E8C'],['#5A8B1A','#7DC21E'],['#1A5A8B','#3498DB'],
 ];
 
+const DATA={
+  surv:{label:'Perks de Superviviente',icon:'🔵',items:[
+    'Empatía','Determinación Firme','Ladrón','Pequeño y Veloz','Golpe Decisivo',
+    'Botiquín Improvisado','Segunda Oportunidad','Vigilia','Corredor','Aura de Curación',
+    'Presencia Espiritual','Sabotaje','Resistencia','Oculto en las Sombras','Fuerza Interior',
+    'Instinto de Supervivencia','Vínculo Inquebrantable','Corazón Indomable','Botín de Guerra',
+    'Alerta','Escapista','Trabajo en Equipo','Ojos de la Oscuridad','Presagio',
+    'Descanso Rápido','Espejo Oscuro','Premonición','Guardián'
+  ]},
+  kill:{label:'Perks de Asesino',icon:'🔴',items:[
+    'Barbarismo','Llamada de la Oscuridad','Recuerdo Amargo','Sin Escapatoria','NOED',
+    'Fuego Interior','Maldición: Sin Sanación','Perseverancia','Destierro','Paciencia Siniestra',
+    'Monitor y Abuso','Agitador','Corrupción Inevitable','Bromas Pesadas','Sello Maldito',
+    'Desolación','Sacrificio Oscuro','Impulso Asesino','Amenaza Latente','Trampa Mortal',
+    'Localizador','Ira Catártica','Miedo Absoluto','Dominación','Presencia Abrumadora',
+    'Caos Controlado','Castigo del Observador'
+  ]},
+  killer:{label:'Asesinos',icon:'💀',items:[
+    'La Trampa','El Espectro','La Sierra','La Enfermera','La Muerte','La Bruja',
+    'El Doctor','El Fantasma','El Asesino de la Máscara','La Espantapájaros',
+    'El Carnicero','El Espíritu','La Legión','La Plaga','El Payaso','El Ojo',
+    'La Pesadilla','El Cerdo','El Demogorgon','Oni','La Deathslinger','El Ejecutor',
+    'La Telaraña','El Artista','La Escolta','El Caballero','El Tirador',
+    'El Blight','El Monstruo del Pantano','El Vecino'
+  ]}
+};
+
 let items=[];
 let angle=0;
 let spinning=false;
 let currentType=null;
 
-const ICONS={surv:'🔵',kill:'🔴',killer:'💀'};
-const LABELS={surv:'Perks de Superviviente',kill:'Perks de Asesino',killer:'Asesinos'};
+// Cargar perks guardadas del panel principal si existen
+function getMergedItems(type){
+  try{
+    const saved=localStorage.getItem('dbd_db_v4');
+    if(saved){
+      const db=JSON.parse(saved);
+      if(type==='surv'&&db.perks) return db.perks.filter(p=>p.type==='surv').map(p=>p.name);
+      if(type==='kill'&&db.perks) return db.perks.filter(p=>p.type==='kill').map(p=>p.name);
+      if(type==='killer'&&db.killers) return db.killers.map(k=>k.name);
+    }
+  }catch(e){}
+  return DATA[type].items;
+}
 
-function drawWheel(){
-  const canvas=document.getElementById('main-canvas');
+function loadType(type){
+  currentType=type;
+  const d=DATA[type];
+  items=getMergedItems(type);
+  angle=0;
+  document.getElementById('tlabel').textContent=d.label;
+  document.getElementById('cicon').textContent=d.icon;
+  document.getElementById('rtype').textContent=d.label;
+  document.getElementById('rname').textContent='—';
+  document.getElementById('rdesc').textContent='Haz clic en el centro o en el botón para girar';
+  document.getElementById('selector').style.display='none';
+  document.getElementById('wheel-view').classList.add('show');
+  draw();
+}
+
+function changeWheel(){
+  document.getElementById('wheel-view').classList.remove('show');
+  document.getElementById('selector').style.display='flex';
+  spinning=false;
+  document.getElementById('spinbtn').disabled=false;
+  document.getElementById('cbtn').classList.remove('spinning');
+}
+
+function draw(){
+  const canvas=document.getElementById('wc');
   const ctx=canvas.getContext('2d');
   const w=canvas.width,h=canvas.height,cx=w/2,cy=h/2,r=w/2-6;
   ctx.clearRect(0,0,w,h);
-  if(!items.length)return;
   const n=items.length;
+  if(!n)return;
   const arc=Math.PI*2/n;
-  items.forEach((item,i)=>{
-    const start=angle+i*arc,end=start+arc;
-    const colors=WHEEL_COLORS[i%WHEEL_COLORS.length];
-    const grad=ctx.createRadialGradient(cx,cy,r*0.12,cx,cy,r);
-    grad.addColorStop(0,colors[0]);grad.addColorStop(1,colors[1]);
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
-    ctx.fillStyle=grad;ctx.fill();
+  items.forEach((name,i)=>{
+    const s=angle+i*arc,e=s+arc;
+    const c=COLORS[i%COLORS.length];
+    const g=ctx.createRadialGradient(cx,cy,r*0.1,cx,cy,r);
+    g.addColorStop(0,c[0]);g.addColorStop(1,c[1]);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,s,e);ctx.closePath();
+    ctx.fillStyle=g;ctx.fill();
     ctx.strokeStyle='rgba(0,0,0,0.5)';ctx.lineWidth=2;ctx.stroke();
-    // Text
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(start+arc/2);
+    // texto
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s+arc/2);
     ctx.textAlign='right';ctx.fillStyle='#fff';
     ctx.shadowColor='rgba(0,0,0,0.95)';ctx.shadowBlur=6;
-    const maxW=r-42,name=item.name;
-    let fs=Math.min(15,Math.max(7,Math.floor(arc*r*0.65/Math.max(name.length,1)*2.8)));
+    const mw=r-38;
+    let fs=Math.min(14,Math.max(7,Math.floor(arc*r*0.65/Math.max(name.length,1)*2.8)));
     ctx.font=`bold ${fs}px Rajdhani,sans-serif`;
-    while(ctx.measureText(name).width>maxW&&fs>7){fs--;ctx.font=`bold ${fs}px Rajdhani,sans-serif`;}
-    ctx.fillText(name,r-12,fs/3);
+    while(ctx.measureText(name).width>mw&&fs>7){fs--;ctx.font=`bold ${fs}px Rajdhani,sans-serif`;}
+    ctx.fillText(name,r-10,fs/3);
     ctx.restore();
-    // Divider line
-    ctx.save();ctx.translate(cx,cy);ctx.rotate(start);
+    // línea divisora
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(s);
     ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;
     ctx.beginPath();ctx.moveTo(r*0.08,0);ctx.lineTo(r,0);ctx.stroke();
     ctx.restore();
   });
-  // Outer gold ring
+  // anillo dorado
   ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
   ctx.strokeStyle='rgba(212,160,23,0.9)';ctx.lineWidth=6;ctx.stroke();
   ctx.beginPath();ctx.arc(cx,cy,r-6,0,Math.PI*2);
   ctx.strokeStyle='rgba(0,0,0,0.7)';ctx.lineWidth=2;ctx.stroke();
-  // Shine overlay
-  const shine=ctx.createRadialGradient(cx-r*0.25,cy-r*0.25,0,cx,cy,r*0.7);
-  shine.addColorStop(0,'rgba(255,255,255,0.08)');shine.addColorStop(1,'rgba(0,0,0,0)');
+  // brillo
+  const shine=ctx.createRadialGradient(cx-r*0.22,cy-r*0.22,0,cx,cy,r*0.65);
+  shine.addColorStop(0,'rgba(255,255,255,0.09)');shine.addColorStop(1,'rgba(0,0,0,0)');
   ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=shine;ctx.fill();
 }
 
-function spinWheel(){
+function spin(){
   if(spinning||!items.length)return;
   spinning=true;
-  const btn=document.getElementById('center-btn');
-  btn.classList.add('spinning');
+  document.getElementById('spinbtn').disabled=true;
+  document.getElementById('cbtn').classList.add('spinning');
 
-  const winnerIdx=Math.floor(Math.random()*items.length);
-  const winner=items[winnerIdx];
+  const wi=Math.floor(Math.random()*items.length);
+  const winner=items[wi];
   const arc=Math.PI*2/items.length;
-  const extraSpins=(5+Math.floor(Math.random()*5))*Math.PI*2;
-  const winnerCenter=winnerIdx*arc+arc/2;
-  const currentMod=angle%(Math.PI*2);
-  const needed=(Math.PI*2-winnerCenter-Math.PI/2-currentMod+Math.PI*2*4)%(Math.PI*2);
-  const targetDelta=extraSpins+needed;
+  const extra=(5+Math.floor(Math.random()*5))*Math.PI*2;
+  const wc=wi*arc+arc/2;
+  const mod=angle%(Math.PI*2);
+  const needed=(Math.PI*2-wc-Math.PI/2-mod+Math.PI*2*4)%(Math.PI*2);
+  const delta=extra+needed;
 
-  const duration=4500+Math.random()*1000;
-  const startAngle=angle;
-  const startTime=performance.now();
-  function easeOut(t){return 1-Math.pow(1-t,4.5);}
+  const dur=4500+Math.random()*1000;
+  const sa=angle,st=performance.now();
+  function ease(t){return 1-Math.pow(1-t,4.5);}
 
   function animate(now){
-    const t=Math.min((now-startTime)/duration,1);
-    angle=startAngle+targetDelta*easeOut(t);
-    drawWheel();
+    const t=Math.min((now-st)/dur,1);
+    angle=sa+delta*ease(t);
+    draw();
     if(t<1){requestAnimationFrame(animate);}
     else{
       spinning=false;
-      btn.classList.remove('spinning');
+      document.getElementById('spinbtn').disabled=false;
+      document.getElementById('cbtn').classList.remove('spinning');
       showResult(winner);
-      // Broadcast result to panel
-      try{localStorage.setItem('dbd_obs_result_'+currentType,JSON.stringify({name:winner.name,desc:winner.desc||winner.power||'',time:Date.now()}));}catch(e){}
     }
   }
   requestAnimationFrame(animate);
 }
 
-function showResult(winner){
-  document.getElementById('result-name').textContent=winner.name;
-  document.getElementById('result-desc').textContent=winner.power||(winner.desc?winner.desc.slice(0,100):'');
-  createSparks();
-  const flash=document.getElementById('winner-flash');
-  flash.classList.add('show');
-  setTimeout(()=>flash.classList.remove('show'),800);
-  // Animate result box
+function showResult(name){
+  document.getElementById('rname').textContent=name;
+  document.getElementById('rdesc').textContent='¡Resultado seleccionado!';
+  sparks();
+  const f=document.getElementById('flash');
+  f.classList.add('show');setTimeout(()=>f.classList.remove('show'),700);
   const rb=document.querySelector('.result-box');
-  rb.style.borderColor='var(--gold2)';rb.style.boxShadow='0 0 30px rgba(212,160,23,0.3)';
-  setTimeout(()=>{rb.style.borderColor='';rb.style.boxShadow='';},2000);
+  rb.style.borderColor='var(--gold2)';rb.style.boxShadow='0 0 25px rgba(212,160,23,0.35)';
+  setTimeout(()=>{rb.style.borderColor='';rb.style.boxShadow='';},2500);
 }
 
-function createSparks(){
+function sparks(){
   const c=document.getElementById('sparks');c.innerHTML='';
   const cols=['#f0c040','#c0392b','#d4a017','#fff','#e74c3c','#2ecc71'];
   for(let i=0;i<35;i++){
     const s=document.createElement('div');s.className='spark';
-    const angle=Math.random()*Math.PI*2,dist=80+Math.random()*300,size=2+Math.random()*6;
-    s.style.cssText=`left:50%;top:50%;width:${size}px;height:${size}px;background:${cols[Math.floor(Math.random()*cols.length)]};--tx:${Math.cos(angle)*dist}px;--ty:${Math.sin(angle)*dist}px;animation-delay:${Math.random()*0.4}s;animation-duration:${0.9+Math.random()*0.7}s`;
+    const a=Math.random()*Math.PI*2,d=80+Math.random()*300,sz=2+Math.random()*6;
+    s.style.cssText=`left:50%;top:50%;width:${sz}px;height:${sz}px;background:${cols[Math.floor(Math.random()*cols.length)]};--tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d}px;animation-delay:${Math.random()*0.4}s;animation-duration:${0.9+Math.random()*0.7}s`;
     c.appendChild(s);
   }
 }
-
-function loadWheel(type,data){
-  currentType=type;
-  items=data;
-  angle=0;
-  document.getElementById('type-label').textContent=LABELS[type]||'Ruleta';
-  document.getElementById('center-icon').textContent=ICONS[type]||'🎰';
-  document.getElementById('result-type').textContent=LABELS[type]||'Resultado';
-  document.getElementById('result-name').textContent='—';
-  document.getElementById('result-desc').textContent='Haz clic en el centro para girar';
-  document.getElementById('waiting').style.display='none';
-  document.getElementById('wheel-container').classList.add('show');
-  drawWheel();
-}
-
-// ---- COMUNICACIÓN CON EL PANEL (localStorage) ----
-function checkForCommands(){
-  try{
-    const cmd=localStorage.getItem('dbd_obs_cmd');
-    if(cmd){
-      const data=JSON.parse(cmd);
-      const ts=data.timestamp||0;
-      // Only process if command is fresh (< 5 seconds old)
-      if(Date.now()-ts<5000){
-        if(data.action==='load'&&data.type&&data.items){
-          loadWheel(data.type,data.items);
-          localStorage.removeItem('dbd_obs_cmd');
-        }
-        if(data.action==='spin'&&!spinning&&items.length){
-          spinWheel();
-          localStorage.removeItem('dbd_obs_cmd');
-        }
-      }
-    }
-  }catch(e){}
-}
-setInterval(checkForCommands,300);
 </script>
 </body>
 </html>
